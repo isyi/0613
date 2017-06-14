@@ -8,7 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import portit.model.db.DBConnectionMgr;
+import portit.model.dto.Media;
 import portit.model.dto.Message;
+import portit.model.dto.Portfolio;
+import portit.model.dto.Profile;
+import portit.model.dto.Tag;
 /**
  * 
  * 통합 검색시, DB에서 자료 가지고 오기.
@@ -21,36 +25,54 @@ public class SearchDao{
 	private ResultSet rs;
 	private DBConnectionMgr pool;
 
-
 	public SearchDao(){
 		try{
 			pool = DBConnectionMgr.getInstance();
 		}
 		catch(Exception err){
-			System.out.println("DBCP 인스턴스 참조 실패 : " + err);
+			System.out.println("SearchDao 오류 : " + err);
 		}
 	}
 	
 	
-	// msgSend.jsp (메세지 보내기) 성공!
-	public void insertMessage(Message dto){
-		String sql = "insert into Message"
-			+"(MSG_ID, MEM_ID_SENDER, MEM_ID_RECEIVER, MSG_DATE, MSG_CONTENT, MSG_ISREAD)"
-			+ "values(seq_message_msgid.nextVal,?,?,sysdate,?,?)";
-	
+	// index2.html -> search.jsp
+	public void TotalSearch(String keytext){
+		ArrayList list = new ArrayList();
+		String sql = "select distinct MEDIA_LIBRARY.ML_PATH, TAG.TAG_NAME, portfolio.PF_TITLE ,Profile.PROF_NAME, portfolio.PF_LIKE"
+				+"from MEDIA_LIBRARY, TAG, Profile, portfolio, prof_pf, TAG_USE"
+				+"where portfolio.PF_TITLE like '%N%' and prof_pf.PROF_ID = Profile.PROF_ID" 
+				+"and prof_pf.PF_ID = portfolio.PF_ID and TAG_USE.TAG_ID = TAG.TAG_ID"
+				+"and TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID and MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID";
+
 		try{
-			con = pool.getConnection();
-			//updatePos(con);
+			con = pool.getConnection();		
 	 		pstmt = con.prepareStatement(sql);
-	 		pstmt.setInt(1, dto.getMem_id_sender());
-			pstmt.setInt(2, dto.getMem_id_receiver());
-			pstmt.setString(3, dto.getMsg_content());
-			pstmt.setString(4, dto.getMsg_isread());
-			pstmt.executeUpdate();
+	 		
+	 		while(rs.next()){
+				Media media = new Media();	//이미지위(path)
+				Tag tag = new Tag();	//태그명
+				Portfolio portfolio = new Portfolio();	//포폴 제목, 좋아요 수
+				Profile profile = new Profile();	//멤버 이름
+				
+				//번호 제목 이름 날짜 조회수	
+				media.setMl_path(rs.getString("ml_path"));
+				tag.setTag_name(rs.getString("tag_name"));
+				portfolio.setPf_title(rs.getString("pf_title"));
+				profile.setProf_name(rs.getString("prof_name"));
+				portfolio.setPf_like(rs.getInt("pf_like"));
+				
+				list.add(media);
+				list.add(tag);
+				list.add(profile);
+				list.add(portfolio);
+			}
+	 		
+			pstmt.executeQuery();		
+			
 		}
 		
 		catch(Exception err){
-			System.out.println("[DAO]: insertMessage()에서 오류");
+			System.out.println("[DAO]: SearchDao()에서 오류");
 			err.printStackTrace();
 		}
 		
@@ -58,8 +80,6 @@ public class SearchDao{
 			pool.freeConnection(con, pstmt);
 		}
 	}
-	
-	
 	
 	
 	
@@ -110,89 +130,6 @@ public class SearchDao{
 		return list;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	private void updatePos(Connection con){
-		try{
-			String sql = "update tblBoard set b_pos=b_pos+1";
-			pstmt = con.prepareStatement(sql);
-			pstmt.executeUpdate();
-		}
-		catch(Exception err){
-			System.out.println("updatePos()에서 오류");
-			err.printStackTrace();
-		}
-	}
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	// Delete.jsp
-	public void deleteMessage(int b_num){
-		String sql = "delete from MESSAGE where b_num=?";
 		
-		try{
-			con = pool.getConnection();
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, b_num);
-			pstmt.executeUpdate();
-		}
-		catch(Exception err){
-			System.out.println("deleteMessage()에서 오류");
-			err.printStackTrace();
-		}
-		finally{
-			pool.freeConnection(con, pstmt);
-		}
-	}
-	
-	
-	
-	
-	
-	
-	// 답변글을 입력할 때 부모보다 큰 pos는 1씩 증가시킨다.
-	public void replyUpdatePos(Message message){
-		try{
-			String sql = "update tblBoard set b_pos = b_pos+1 where b_pos > ?";
-			con = pool.getConnection();
-			pstmt = con.prepareStatement(sql);
-			//pstmt.setInt(1, board.getB_pos());
-			pstmt.executeUpdate();
-		}
-		catch(Exception err){
-			System.out.println("replyUpdatePos()에서 오류");
-			err.printStackTrace();
-		}
-		finally{
-			pool.freeConnection(con, pstmt);
-		}
-	}
-	
-	
-	
-	
-	public String useDepth(int depth){
-		String result ="";
-		for(int i=0; i<depth*3; i++){
-			result += "&nbsp;";
-		}
-		return result;
-	}
-	
 	
 }
-
