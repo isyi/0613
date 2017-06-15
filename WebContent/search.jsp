@@ -173,20 +173,7 @@
 					<h1> [ ${param.search} ] 검색결과 </h1>
 					<div class="container col-md-12">
 					 	<div style="border: 1px solid black">
-							<h4>
-								<span class="label label-default">구 분</span>&nbsp;&nbsp;&nbsp;&nbsp;
-									<a href="#">전체</a>&nbsp;&nbsp;
-									<a href="#">포트폴리오</a>&nbsp;&nbsp;
-									<a href="#">인물</a> &nbsp;&nbsp;
-									<a href="#">프로젝트</a> 
-									<br><br>
-										
-								<span class="label label-default">정 렬</span>&nbsp;&nbsp;&nbsp;&nbsp;
-									<a href="#">최신순</a>&nbsp;&nbsp;
-									<a href="#">인기순</a>&nbsp;&nbsp;
-									<a href="#">랜덤</a> 
-									<br><br>
-										
+							<h4>								
 								<span class="label label-default">언 어</span>&nbsp;&nbsp;&nbsp;&nbsp;
 									<input type="button" value="java" onclick="fnAppendItem()"/>
 									<input type="button" value="c" onclick="fnAppendItem()"/>
@@ -197,8 +184,9 @@
 									<input type="button" value="spring" onclick="fnAppendItem()"/>
 									<input type="button" value="android" onclick="fnAppendItem()"/>
 									<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<input type="text" id="language" placeholder="그 밖의 언어" onchange="fnAppendItem2()" />
-					
+									<span id="ex">
+										<input type="text" id="language" placeholder="그 밖의 언어"  onchange="fnAppendItem2()" />
+									</span>
 									<br>
 									<hr>
 								

@@ -8,6 +8,10 @@ public class Portfolio {
 	private String pf_intro;
 	private Date pf_regdate;
 	private int pf_like;
+	private Date pf_startdate;
+	private Date pf_enddate;
+	private int pf_numofperson;
+	private String pf_repository;
 	
 	public int getPf_id() {
 		return pf_id;
@@ -38,6 +42,30 @@ public class Portfolio {
 	}
 	public void setPf_like(int pf_like) {
 		this.pf_like = pf_like;
+	}
+	public Date getPf_startdate() {
+		return pf_startdate;
+	}
+	public void setPf_startdate(Date pf_startdate) {
+		this.pf_startdate = pf_startdate;
+	}
+	public Date getPf_enddate() {
+		return pf_enddate;
+	}
+	public void setPf_enddate(Date pf_enddate) {
+		this.pf_enddate = pf_enddate;
+	}
+	public int getPf_numofperson() {
+		return pf_numofperson;
+	}
+	public void setPf_numofperson(int pf_numofperson) {
+		this.pf_numofperson = pf_numofperson;
+	}
+	public String getPf_repository() {
+		return pf_repository;
+	}
+	public void setPf_repository(String pf_repository) {
+		this.pf_repository = pf_repository;
 	}
 	
 }
