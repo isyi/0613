@@ -24,7 +24,7 @@ public class SearchController extends HttpServlet{
 		String url = null;		
 		
 		if(cmd.equals("SEARCH")){
-			url="/search.jsp";
+			url="/searchAll.jsp";
 		}
 
 		RequestDispatcher view = req.getRequestDispatcher(url);
