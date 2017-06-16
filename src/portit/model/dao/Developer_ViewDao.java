@@ -54,7 +54,6 @@ public class Developer_ViewDao {
 
 	/**
 	 * 사용된 태그명을 불러오는 메서드
-	 *
 	 */
 	public List tag_load() {
 		ArrayList list = new ArrayList();
@@ -83,7 +82,6 @@ public class Developer_ViewDao {
 
 	/**
 	 * 포트폴리오 등록자의 이름을 불러오는 메서드
-	 * 
 	 */
 	public List prof_load() {
 		ArrayList list = new ArrayList();

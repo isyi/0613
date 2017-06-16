@@ -50,7 +50,7 @@
 	}
 %>
 <hr>
-<!-- 포트폴리오 제목 / 좋아요 수 -->
+<!-- 등록자 이름 -->
 <%
 	for (int i = 0; i < prof.size(); i++) {
 		Profile profile = (Profile) prof.get(i);

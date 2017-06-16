@@ -19,7 +19,13 @@ public class Proj_viewDao {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	private DBConnectionMgr pool;
-	private String sql = "";
+	//쿼리문에  trunc(project.proj_regenddate - sysdate) as "D-Day" 빠짐
+	private String sql = "select distinct project.proj_id, tag.tag_name, project.proj_title,"
+					+ " tag.tag_name, project.proj_to "
+					+ "from tag join tag_use "
+					+ "on tag.tag_id = tag_use.tag_id "
+					+ "join project "
+					+ "on tag_use.tag_use_type_id = project.proj_id";
 			
 	/**
 	 * DB연결 생성자
@@ -89,14 +95,15 @@ public class Proj_viewDao {
 				Project project = new Project(); 
 				project.setProj_title(rs.getString("proj_title"));
 				project.setProj_to(rs.getInt("proj_to"));
-				project.setProj_regdate(rs.getDate("proj_regdate"));		//등록 시각		
-				project.setProj_regenddate(rs.getDate("proj_regenddate"));	//마감 시각	
+				
+				//project.setProj_regenddate(rs.getDate("proj_regenddate")); date형식 받는데 오류
+				
 				list.add(project);
 			}
 		}
 		
 		catch (Exception err) {
-			System.out.println("tag_load() 에서 오류");
+			System.out.println("proj_load() 에서 오류");
 			err.printStackTrace();
 		}
 		

@@ -1,3 +1,12 @@
+<%@page import="java.util.Random"%>
+<%@page import="portit.model.dto.Project"%>
+<%@page import="portit.model.dto.Portfolio"%>
+<%@page import="portit.model.dto.Media"%>
+<%@page import="portit.model.dto.Tag"%>
+<%@page import="portit.model.dto.Profile"%>
+<%@page import="java.util.List"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -32,8 +41,38 @@
     <![endif]-->
 </head>
 
-<body>
+<jsp:useBean id="port" class="portit.model.dao.Portfolio_ViewDao" />
+<jsp:useBean id="developer" class="portit.model.dao.Developer_ViewDao" />
+<jsp:useBean id="project" class="portit.model.dao.Proj_viewDao" />
+	
+<% 	
+	List ml_path = port.media_load(); 
+	List tag_name = port.tag_load(); 
+	List pf = port.pf_load(); 
+	List prof = port.prof_load(); 
+	
+	Tag tag = (Tag) tag_name.get(0);
+	Media media = (Media) ml_path.get(0);
+	Portfolio portfolio = (Portfolio) pf.get(0);
+	Profile profile = (Profile) prof.get(0);
+	
+	
+	List tag_name2 = developer.tag_load();
+	List prof2 = developer.prof_load(); 
+	
+	Profile profile2 = (Profile) prof2.get(0);
+	Tag tag2 = (Tag) tag_name2.get(0);
 
+	
+	
+	List tag_name3 = project.tag_load();
+	List proj = project.proj_load(); 
+	
+	Tag tag3 = (Tag) tag_name.get(0);
+	Project pro3 = (Project) proj.get(0);
+%>	
+
+<body>
 	<section id="container">
 		<!-- **********************************************************************************************************************************************************
       TOP BAR CONTENT & NOTIFICATIONS
@@ -127,21 +166,22 @@
 						<!-- 포트폴리오 패널 -->
 						<div class="tab-pane active" id="pfRecommend">
 							<div class="row mt">
+							
 								<!-- 첫번째 포트폴리오 -->
 								<div class="col-md-3 mb">
 									<div class="portfolio-simple">
-										<div class="pfImg"></div>
+										<div class="pfImg"></div>	
 										<div class="pfInfo">
 											<div class="simple-content">
 												<div class="pfTag">
-													<a href="">#태그&nbsp;</a>
+													<a href=""># <%= tag.getTag_name() %>&nbsp;</a>
 												</div>
 												<div class="pfTitle">
-													<a href="">포트폴리오 제목</a>
+													<a href=""><%= portfolio.getPf_title() %></a>
 												</div>
 												<div class="pfBottom">
-													<span class="pfmemName"><a href="">멤버 이름</a></span> <span
-														class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;534</span>
+													<span class="pfmemName"><a href=""><%= profile.getProf_name() %></a></span> 
+													<span class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;<%= portfolio.getPf_like() %></span>
 												</div>
 											</div>
 										</div>
@@ -211,26 +251,29 @@
 								</div>
 							</div>
 						</div>
+
 		
 						<!-- 개발자 패널 -->
 						<div class="tab-pane" id="memRecommend">
 							<div class="row mt">
+		
 								<!-- 첫 번째 member-->
 								<div class="col-md-3 mb">
 									<div class="member-simple">
 										<div class="simple-content text-center">
 											<img class="memImg img-circle" alt="avatar"
-												src="assets/img/friends/fr-06.jpg" />
+												src="<%= profile2.getProf_img() %>" />
 											<div>
 												<div class="memName">
-													<a href="">멤버 이름</a>
+													<a href=""><%= profile2.getProf_name() %></a>
 												</div>
 												<div class="memTag">
-													<a href="">#태그&nbsp;</a>
+													<a href="">#<%= tag2.getTag_name() %>&nbsp;</a>
 												</div>
+	
 												<div class="memFollow">
 													<span class="fa fa-user"></span>&nbsp;&nbsp; <span
-														class="memFollowCount">135</span>
+														class="memFollowCount"><%= profile2.getProf_follower() %></span>
 												</div>
 											</div>
 										</div>
@@ -314,14 +357,14 @@
 											<div class="project-simple">
 												<div class="simple-content text-center">
 													<div class="pjTag">
-														<a href="">#태그&nbsp;</a>
+														<a href="">#<%= tag3.getTag_name() %>&nbsp;</a>
 													</div>
 													<div class="pjTitle">
-														<a href="">프로젝트 제목입니다...</a>
+														<a href=""> <%= pro3.getProj_title() %></a>
 													</div>
 													<div class="pjInfo">
 														<span class="pjField"><a href="">모집 분야</a></span>&nbsp;/&nbsp;
-														<span class="pjTo">2 명</span>
+														<span class="pjTo"><%= pro3.getProj_to() %></span>
 													</div>
 													<div class="pjRegiEndDate">
 														<span>마감일까지</span>&nbsp;&nbsp; <span class="pjDday">D&nbsp;-&nbsp;<span>3</span></span>

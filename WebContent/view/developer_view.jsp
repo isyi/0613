@@ -3,15 +3,13 @@
 <%@page import="java.util.List"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
  
- <jsp:useBean id="developer" class="portit.model.dao.Developer_ViewDao" />
- 
- <!-- 개발자 구성 화면에 보여지는 내용들 -->
+<jsp:useBean id="developer" class="portit.model.dao.Developer_ViewDao" />
 
+ <!-- 개발자 구성 화면에 보여지는 내용들 -->
  <%  
 	List tag_name = developer.tag_load();
 	List prof = developer.prof_load(); 
 %>
-
 <!-- 태그명 -->
 <%
 	for (int i = 0; i < tag_name.size(); i++) {
@@ -23,7 +21,7 @@
 	}
 %>
 <hr>
-<!-- 포트폴리오 제목 / 좋아요 수 -->
+<!-- 개발자 이미지 / 이름 / 팔로워 수 -->
 <%
 	for (int i = 0; i < prof.size(); i++) {
 		Profile profile = (Profile) prof.get(i);
