@@ -1,14 +1,12 @@
-<%@page import="java.util.Random"%>
+<%@page import="portit.model.dto.Timeline"%>
 <%@page import="portit.model.dto.Project"%>
+<%@page import="portit.model.dto.Developer"%>
 <%@page import="portit.model.dto.Portfolio"%>
-<%@page import="portit.model.dto.Media"%>
-<%@page import="portit.model.dto.Tag"%>
-<%@page import="portit.model.dto.Profile"%>
 <%@page import="java.util.List"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,36 +39,10 @@
     <![endif]-->
 </head>
 
-<jsp:useBean id="port" class="portit.model.dao.Portfolio_ViewDao" />
+<jsp:useBean id="portfolio" class="portit.model.dao.Portfolio_ViewDao" />
 <jsp:useBean id="developer" class="portit.model.dao.Developer_ViewDao" />
 <jsp:useBean id="project" class="portit.model.dao.Proj_viewDao" />
-	
-<% 	
-	List ml_path = port.media_load(); 
-	List tag_name = port.tag_load(); 
-	List pf = port.pf_load(); 
-	List prof = port.prof_load(); 
-	
-	Tag tag = (Tag) tag_name.get(0);
-	Media media = (Media) ml_path.get(0);
-	Portfolio portfolio = (Portfolio) pf.get(0);
-	Profile profile = (Profile) prof.get(0);
-	
-	
-	List tag_name2 = developer.tag_load();
-	List prof2 = developer.prof_load(); 
-	
-	Profile profile2 = (Profile) prof2.get(0);
-	Tag tag2 = (Tag) tag_name2.get(0);
-
-	
-	
-	List tag_name3 = project.tag_load();
-	List proj = project.proj_load(); 
-	
-	Tag tag3 = (Tag) tag_name.get(0);
-	Project pro3 = (Project) proj.get(0);
-%>	
+<jsp:useBean id="timeline" class="portit.model.dao.Timeline_ViewDao" />
 
 <body>
 	<section id="container">
@@ -88,8 +60,8 @@
 					<!-- settings start -->
 					<li><a href="">Member</a></li>
 					<li><a href="">Portfolio</a></li>
-					<li><a href="">Project</a>
-					<li>
+					<li><a href="">Project</a> <li>
+					
 					<li><a href="">Community</a></li>
 				</ul>
 				<!--  menu end -->
@@ -98,12 +70,13 @@
 			<div class="top-menu-right">
 				<ul class="nav pull-right top-menu">
 					<li>
-						<form class="form-inline top-menu-search" method="post" action="/Insu/search?cmd=SEARCH">
+						<form class="form-inline top-menu-search" method="post"
+							action="/Insu/search?cmd=SEARCH">
 							<div class="input-group">
-								<input type="text" class="form-control round-form" name="search" 
+								<input type="text" class="form-control round-form" name="search"
 									size="20" placeholder="통합 검색" />
 								<span class="input-group-btn">
-									<button type="submit" class="btn btn-default round-form" >
+									<button type="submit" class="btn btn-default round-form">
 										<span class="glyphicon glyphicon-search"></span>
 									</button>
 								</span>
@@ -163,10 +136,17 @@
 				</div>		
 				<div class="tabs-below tabbable col-md-12">
 					<div class="tab-content">
+					
 						<!-- 포트폴리오 패널 -->
 						<div class="tab-pane active" id="pfRecommend">
 							<div class="row mt">
-							
+					
+<%
+	List list = portfolio.portfolio_info();
+	//request.setAttribute("list", list);
+	for (int i = 0; i < 4; i++) {
+		Portfolio port = (Portfolio) list.get(i);
+%>			
 								<!-- 첫번째 포트폴리오 -->
 								<div class="col-md-3 mb">
 									<div class="portfolio-simple">
@@ -174,174 +154,60 @@
 										<div class="pfInfo">
 											<div class="simple-content">
 												<div class="pfTag">
-													<a href=""># <%= tag.getTag_name() %>&nbsp;</a>
-												</div>
-												<div class="pfTitle">
-													<a href=""><%= portfolio.getPf_title() %></a>
+													<a href=""># <%=port.getTag_name()%>&nbsp;</a></div>
+						
+											<div class="pfTitle">
+													<a href=""><%=port.getPf_title()%></a>
 												</div>
 												<div class="pfBottom">
-													<span class="pfmemName"><a href=""><%= profile.getProf_name() %></a></span> 
-													<span class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;<%= portfolio.getPf_like() %></span>
+													<span class="pfmemName"><a href=""><%=port.getProf_name()%></a></span> 
+													<span class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;<%=port.getPf_like()%></span>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								<!-- 두번째 포트폴리오 -->
-								<div class="col-md-3 mb">
-									<div class="portfolio-simple">
-										<div class="pfImg"></div>
-										<div class="pfInfo">
-											<div class="simple-content">
-												<div class="pfTag">
-													<a href="">#태그&nbsp;</a>
-												</div>
-												<div class="pfTitle">
-													<a href="">포트폴리오 제목</a>
-												</div>
-												<div class="pfBottom">
-													<span class="pfmemName"><a href="">멤버 이름</a></span> <span
-														class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;534</span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-		
-								<!-- 세번째 포트폴리오 -->
-								<div class="col-md-3 mb">
-									<div class="portfolio-simple">
-										<div class="pfImg"></div>
-										<div class="pfInfo">
-											<div class="simple-content">
-												<div class="pfTag">
-													<a href="">#태그&nbsp;</a>
-												</div>
-												<div class="pfTitle">
-													<a href="">포트폴리오 제목</a>
-												</div>
-												<div class="pfBottom">
-													<span class="pfmemName"><a href="">멤버 이름</a></span> <span
-														class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;534</span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-		
-								<!-- 네번째 포트폴리오 -->
-								<div class="col-md-3 mb">
-									<div class="portfolio-simple">
-										<div class="pfImg"></div>
-										<div class="pfInfo">
-											<div class="simple-content">
-												<div class="pfTag">
-													<a href="">#태그&nbsp;</a>
-												</div>
-												<div class="pfTitle">
-													<a href="">포트폴리오 제목</a>
-												</div>
-												<div class="pfBottom">
-													<span class="pfmemName"><a href="">멤버 이름</a></span> <span
-														class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;534</span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+								</div>	
+<%
+	}
+%>							
 							</div>
 						</div>
 
 		
-						<!-- 개발자 패널 -->
+					<!-- 개발자 패널 -->
 						<div class="tab-pane" id="memRecommend">
 							<div class="row mt">
-		
+<%
+	List list2 = developer.developer_info();
+	//request.setAttribute("list", list);
+	for (int i = 0; i < 4; i++) {
+		Developer dev = (Developer) list2.get(i);
+%>				
 								<!-- 첫 번째 member-->
 								<div class="col-md-3 mb">
 									<div class="member-simple">
 										<div class="simple-content text-center">
 											<img class="memImg img-circle" alt="avatar"
-												src="<%= profile2.getProf_img() %>" />
+												src="<%=dev.getProf_img()%>" />
 											<div>
 												<div class="memName">
-													<a href=""><%= profile2.getProf_name() %></a>
+													<a href=""><%=dev.getProf_name()%></a>
 												</div>
 												<div class="memTag">
-													<a href="">#<%= tag2.getTag_name() %>&nbsp;</a>
+													<a href="">#<%=dev.getTag_name()%>&nbsp;</a>
 												</div>
 	
 												<div class="memFollow">
 													<span class="fa fa-user"></span>&nbsp;&nbsp; <span
-														class="memFollowCount"><%= profile2.getProf_follower() %></span>
+														class="memFollowCount"><%=dev.getProf_follower()%></span>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-								<!-- 두 번째 member-->
-								<div class="col-md-3 mb">
-									<div class="member-simple">
-										<div class="simple-content text-center">
-											<img class="memImg img-circle" alt="avatar"
-												src="assets/img/friends/fr-06.jpg" />
-											<div>
-												<div class="memName">
-													<a href="">멤버 이름</a>
-												</div>
-												<div class="memTag">
-													<a href="">#태그&nbsp;</a>
-												</div>
-												<div class="memFollow">
-													<span class="fa fa-user"></span>&nbsp;&nbsp; <span
-														class="memFollowCount">135</span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- 세 번째 member-->
-								<div class="col-md-3 mb">
-									<div class="member-simple">
-										<div class="simple-content text-center">
-											<img class="memImg img-circle" alt="avatar"
-												src="assets/img/friends/fr-06.jpg" />
-											<div>
-												<div class="memName">
-													<a href="">멤버 이름</a>
-												</div>
-												<div class="memTag">
-													<a href="">#태그&nbsp;</a>
-												</div>
-												<div class="memFollow">
-													<span class="fa fa-user"></span>&nbsp;&nbsp; <span
-														class="memFollowCount">135</span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- 네 번째 member-->
-								<div class="col-md-3 mb">
-									<div class="member-simple">
-										<div class="simple-content text-center">
-											<img class="memImg img-circle" alt="avatar"
-												src="assets/img/friends/fr-06.jpg" />
-											<div>
-												<div class="memName">
-													<a href="">멤버 이름</a>
-												</div>
-												<div class="memTag">
-													<a href="">#태그&nbsp;</a>
-												</div>
-												<div class="memFollow">
-													<span class="fa fa-user"></span>&nbsp;&nbsp; <span
-														class="memFollowCount">135</span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+<%
+	}
+%>							
 		
 							</div>
 						</div>
@@ -351,106 +217,60 @@
 							<div class="row mt">
 								<div class="col-lg-12">
 									<div class="row">
-		
+<%
+	List list3 = project.project_info();
+	//request.setAttribute("list", list);
+	for (int i = 0; i < list3.size(); i++) {
+		Project proj = (Project) list3.get(i);
+	
+%>			
 										<!-- 첫번째 모집 -->
 										<div class="col-md-3 mb">
 											<div class="project-simple">
 												<div class="simple-content text-center">
 													<div class="pjTag">
-														<a href="">#<%= tag3.getTag_name() %>&nbsp;</a>
+														<a href=""> #<%=proj.getTag_name() %>&nbsp;</a>
 													</div>
 													<div class="pjTitle">
-														<a href=""> <%= pro3.getProj_title() %></a>
+														<a href=""> </a>
 													</div>
 													<div class="pjInfo">
-														<span class="pjField"><a href="">모집 분야</a></span>&nbsp;/&nbsp;
-														<span class="pjTo"><%= pro3.getProj_to() %></span>
+														<span class="pjField"><a href="">모집 분야(태그)</a></span>&nbsp;/&nbsp;
+														<span class="pjTo"><%=proj.getProj_to() %></span>
 													</div>
 													<div class="pjRegiEndDate">
-														<span>마감일까지</span>&nbsp;&nbsp; <span class="pjDday">D&nbsp;-&nbsp;<span>3</span></span>
+														<span>마감일까지</span>&nbsp;&nbsp; 
+														<span class="pjDday">D&nbsp;-&nbsp;<span>// 시간 함수로 (마감일 - 현재일) 구해서 리턴</span></span>
 													</div>
 												</div>
 											</div>
 										</div>
+<%} %>		
+							
 		
-										<!-- 두번째 모집 -->
-										<div class="col-md-3 mb">
-											<div class="project-simple">
-												<div class="simple-content text-center">
-													<div class="pjTag">
-														<a href="">#태그&nbsp;</a>
-													</div>
-													<div class="pjTitle">
-														<a href="">프로젝트 제목입니다...</a>
-													</div>
-													<div class="pjInfo">
-														<span class="pjField"><a href="">모집 분야</a></span>&nbsp;/&nbsp;
-														<span class="pjTo">2 명</span>
-													</div>
-													<div class="pjRegiEndDate">
-														<span>마감일까지</span>&nbsp;&nbsp; <span class="pjDday">D&nbsp;-&nbsp;<span>3</span></span>
-													</div>
-												</div>
-											</div>
-										</div>
-		
-										<!-- 세번째 모집 -->
-										<div class="col-md-3 mb">
-											<div class="project-simple">
-												<div class="simple-content text-center">
-													<div class="pjTag">
-														<a href="">#태그&nbsp;</a>
-													</div>
-													<div class="pjTitle">
-														<a href="">프로젝트 제목입니다...</a>
-													</div>
-													<div class="pjInfo">
-														<span class="pjField"><a href="">모집 분야</a></span>&nbsp;/&nbsp;
-														<span class="pjTo">2 명</span>
-													</div>
-													<div class="pjRegiEndDate">
-														<span>마감일까지</span>&nbsp;&nbsp; <span class="pjDday">D&nbsp;-&nbsp;<span>3</span></span>
-													</div>
-												</div>
-											</div>
-										</div>
-		
-										<!-- 네번째 모집 -->
-										<div class="col-md-3 mb">
-											<div class="project-simple">
-												<div class="simple-content text-center">
-													<div class="pjTag">
-														<a href="">#태그&nbsp;</a>
-													</div>
-													<div class="pjTitle">
-														<a href="">프로젝트 제목입니다...</a>
-													</div>
-													<div class="pjInfo">
-														<span class="pjField"><a href="">모집 분야</a></span>&nbsp;/&nbsp;
-														<span class="pjTo">2 명</span>
-													</div>
-													<div class="pjRegiEndDate">
-														<span>마감일까지</span>&nbsp;&nbsp; <span class="pjDday">D&nbsp;-&nbsp;<span>3</span></span>
-													</div>
-												</div>
-											</div>
-										</div>
-		
-									</div>
-									<!--/END PORTPOLIO ROW OF PANELS -->
+									</div>									
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>	
 					
+					<!--/END PORTPOLIO ROW OF PANELS -->
 				<hr class="mainLine col-md-12" />
-				
-				<!-- Timeline page start -->
+
+			<!-- Timeline page start -->
 				<div class="timeline col-md-12">
 					<h3 align="center">
-						<b>Timeline</b>
+						<b> Timeline </b>
 					</h3>
+					
+<%
+	List list4 = timeline.timeline_info();
+	//request.setAttribute("list", list);
+	for (int i = 0; i < list4.size(); i++) {
+		Portfolio time = (Portfolio) list4.get(i);
+	
+%>	
 					<!-- 첫번째 타임라인 -->
 					<div class="col-md-12 mt">
 						<div class="portfolio-timeline">
@@ -460,55 +280,28 @@
 							</div>
 							<span class="pfInfo">
 								<div>
-									<span class="pfTitle"><a href="">포트폴리오 제목</a></span> <span
+									<span class="pfTitle"><a href=""><%=time.getPf_title() %></a></span> <span
 										class="pfLike"> <span class="glyphicon glyphicon-heart"></span>
 										<span class="pfLikeCount">234</span>
 									</span>
 								</div>
 								<div class="pfmemName">
-									<span class="fa fa-user"></span>&nbsp;&nbsp; <span><a
-										href="">게시자이름</a></span>
+									<span class="fa fa-user"><%=time.getProf_name() %></span>&nbsp;&nbsp; <span><a
+										href=""></a></span>
 								</div>
 								<div class="pfTag">
-									<a href="">#태그&nbsp;</a>
+									<a href="">#<%=time.getTag_name() %>&nbsp;</a>
 								</div>
 							</span> <span class="pfImage"> <span><img
-									src="assets/img/instagram.jpg" /></span> <span><img
+									src="<%=time.getMl_path() %>" /></span> <span><img
 									src="assets/img/instagram.jpg" /></span> <span><img
 									src="assets/img/instagram.jpg" /></span>
 							</span>
 						</div>
 					</div>
-					<!-- 두번째 타임라인 -->
-					<div class="col-md-12 mt">
-						<div class="portfolio-timeline">
-							<div class="pfTlType">
-								<span class="glyphicon glyphicon-heart"></span> <span
-									class="pfTypeText">[멤버이름]님이 내 포트폴리오를 좋아합니다.</span>
-							</div>
-							<span class="pfInfo">
-								<div>
-									<span class="pfTitle"><a href="">포트폴리오 제목</a></span> <span
-										class="pfLike"> <span class="glyphicon glyphicon-heart"></span>
-										<span class="pfLikeCount">234</span>
-									</span>
-								</div>
-								<div class="pfmemName">
-									<span class="fa fa-user"></span>&nbsp;&nbsp; <span><a
-										href="">게시자이름</a></span>
-								</div>
-								<div class="pfTag">
-									<a href="">#태그&nbsp;</a>
-								</div>
-							</span> <span class="pfImage"> <span><img
-									src="assets/img/instagram.jpg" /></span> <span><img
-									src="assets/img/instagram.jpg" /></span> <span><img
-									src="assets/img/instagram.jpg" /></span>
-							</span>
-						</div>
-					</div>
-					</div>
-				
+<%} %>
+					
+				</div>
 			</div>
 		</section>
 		<!-- Timeline page end -->

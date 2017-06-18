@@ -7,23 +7,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import portit.model.db.DBConnectionMgr;
-import portit.model.dto.Project;
-import portit.model.dto.Tag;
+import portit.model.dto.Portfolio;
 
 /**
- * 프로젝트 모집 구성 화면
+ *  타임라인 구성화면
  */
-public class Proj_viewDao {
+public class Timeline_ViewDao {
 
 	private Connection con;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	private DBConnectionMgr pool;
-	
+		
 	/**
 	 * DB연결 생성자
 	 */
-	public Proj_viewDao() {
+	public Timeline_ViewDao() {
 		try {
 			pool = DBConnectionMgr.getInstance();
 			con = pool.getConnection();
@@ -46,47 +45,45 @@ public class Proj_viewDao {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 * 프로젝트 간략 정보
+	 * 타임라인 정보를 불러오는 메서드	  
 	 */
-	public List project_info() {
+	public List timeline_info() {
 		ArrayList list = new ArrayList();
-		//쿼리문에  trunc(project.proj_regenddate - sysdate) as "D-Day" 빠짐
-		String sql = "select distinct project.proj_id, tag.tag_name, project.proj_title,"
-						+ " tag.tag_name, project.proj_to, trunc(project.proj_regenddate - sysdate) "
-						+ "from tag join tag_use "
-						+ "on tag.tag_id = tag_use.tag_id "
-						+ "join project "
-						+ "on tag_use.tag_use_type_id = project.proj_id";
-				
+		String sql = "select distinct MEDIA_LIBRARY.ML_PATH, TAG.TAG_NAME, portfolio.PF_TITLE ,Profile.PROF_NAME, portfolio.PF_LIKE "
+				+ "from MEDIA_LIBRARY, TAG, Profile, portfolio, prof_pf, TAG_USE "
+				+ "where prof_pf.PROF_ID = Profile.PROF_ID  "
+				+ "and prof_pf.PF_ID = portfolio.PF_ID and TAG_USE.TAG_ID = TAG.TAG_ID "
+				+ "and TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID "
+				+ "and MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID";	
+		
 		try {
+
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			
+
 			while (rs.next()) {
-				Project project = new Project(); 
-				project.setTag_name(rs.getString("tag_name"));
-				project.setProj_title(rs.getString("proj_title"));
-				project.setProj_to(rs.getInt("proj_to"));
-				
-				//project.setProj_regenddate(rs.getDate("proj_regenddate")); date형식 받는데 오류
-				
-				list.add(project);
+				Portfolio portfolio = new Portfolio();
+				portfolio.setMl_path(rs.getString("ml_path"));
+				portfolio.setTag_name(rs.getString("tag_name"));
+				portfolio.setPf_title(rs.getString("pf_title"));
+				portfolio.setPf_like(rs.getInt("pf_like"));
+				portfolio.setProf_name(rs.getString("prof_name"));
+
+				list.add(portfolio);
 			}
 		}
-		
+
 		catch (Exception err) {
-			System.out.println("proj_load() 에서 오류");
+			System.out.println("portfolio_info() 에서 오류");
 			err.printStackTrace();
 		}
-		
+
 		finally {
 			freeConnection();
 		}
 		return list;
-	}
-
-
+	}	
 
 }
