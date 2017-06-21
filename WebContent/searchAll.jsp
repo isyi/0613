@@ -2,6 +2,8 @@
 <%@page import="portit.model.dto.Developer"%>
 <%@page import="java.util.List"%>
 <%@page import="portit.model.dto.Portfolio"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -179,7 +181,7 @@
 				<div class="col-md-12 mt search" id="search">
 					<h2>
 						<span class="fa fa-search"></span>
-						<span class="keyword">${param.search}</span>						
+						<span class="keyword">${search}</span> 	
 					</h2>
 					<!-- 조건 검색 box -->					
 					<div class="searchSorting col-md-12 mt">	
@@ -227,16 +229,14 @@
 					<br>	
 					<br>
 					<hr class="resultLine" id="pfResult"/>
+			
 					<!-- 포트폴리오 결과 -->
+				
 					<div class="pfResult mt mb" id="pfResult">
+						<div class="col-md-12 mb">
 						<h4>포트폴리오(200개)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
-						
-<%
-	List list = portfolio.portfolio_info();
-	//request.setAttribute("list", list);
-	for (int i = 0; i < 4; i++) {
-		Portfolio port = (Portfolio) list.get(i);
-%>	
+
+					<c:forEach begin="0" end="${port_list.size()-1 }" var="i" >	
 						<!-- 첫번째 포트폴리오 -->
 						<div class="col-md-3 mb">
 							<div class="portfolio-simple">
@@ -244,55 +244,53 @@
 								<div class="pfInfo">
 									<div class="simple-content">
 										<div class="pfTag">
-											<a href="">#<%=port.getTag_name() %>&nbsp;</a>
+											<a href="">#${port_list[i].tag_name}&nbsp;</a>
 										</div>
 										<div class="pfTitle">
-											<a href=""><%=port.getPf_title() %> 제목</a>
+											<a href="">${port_list[i].pf_title} </a>
 										</div>
 										<div class="pfBottom">
-											<span class="pfmemName"><a href=""><%=port.getProf_name() %></a></span> <span
-												class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;<%=port.getPf_like() %></span>
+											<span class="pfmemName"><a href="">${port_list[i].prof_name}</a></span> <span
+												class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;${port_list[i].pf_like}</span>
 										</div>
 									</div>
 								</div>
 							</div>
+						</div>		
+					</c:forEach>
 						</div>
-<%} %>
-			
 						<div class="text-right">
 							<button type="button" class="btn moreBtn" onclick="location.href='port_search.html'">더 보기</button>							
 						</div>
 					</div>
-				
+			
 					<hr class="resultLine" id="memResult"/>
 
 					<!-- 인물 결과 -->
 					<div class="memResult mt mb" >
+						<div class="col-md-12 mb">
 						<h4>인물(150명)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
-<%
-	List list2 = developer.developer_info();
-	//request.setAttribute("list", list);
-	for (int i = 0; i < 4; i++) {
-		Developer dev = (Developer) list2.get(i);
-%>		
+						
+					<c:forEach begin="0" end="${dev_list.size()-1 }" var="i" >	
 						<!-- 첫 번째 member-->
 						<div class="col-md-3 mb">
 	          				<div class="member-simple">
 		          				<div class="simple-content text-center">	      
-			          				<img class="memImg img-circle" alt="avatar" src="<%=dev.getProf_img()%>"/>   
+			          				<img class="memImg img-circle" alt="avatar" src="${dev_list[i].prof_img}"/>   
 			         				<div>
-			         					<div class="memName"><a href=""><%=dev.getProf_name() %></a></div>
-			         					<div class="memTag"><a href="">#<%=dev.getTag_name() %>&nbsp;</a></div>
+			         					<div class="memName"><a href=""> ${dev_list[i].prof_name}</a></div>
+			         					<div class="memTag"><a href=""># ${dev_list[i].tag_name}&nbsp;</a></div>
 			         					<div class="memFollow">
 			         						<span class="fa fa-user"></span>&nbsp;&nbsp;
-			         						<span class="memFollowCount"><%=dev.getProf_follower() %></span>
+			         						<span class="memFollowCount">${dev_list[i].prof_follower}</span>
 			         					</div>
 			         				</div>
 		          				</div>          				
 	          				</div>
 	          			</div> 
-<%} %>	          			
-							
+        			</c:forEach>
+        			
+						</div>	
 						<div class="text-right">
 							<button type="button" class="btn moreBtn" onclick="location.href='person_search.html'">더 보기</button>							
 						</div>
@@ -303,21 +301,17 @@
 					<!-- 프로젝트 결과 -->
 					<div class="projResult mt mb" >
 						<h4>프로젝트(60건)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
-<%
-	List list3 = project.project_info();
-	//request.setAttribute("list", list);
-	for (int i = 0; i < list3.size(); i++) {
-		Project proj = (Project) list3.get(i);
-	
-%>	
-						<!-- 첫번째 프로젝트 -->
+
+				<c:forEach begin="0" end="${proj_list.size() }" var="i" >	
+					<!-- 첫번째 프로젝트 -->
 						<div class="col-md-12 mb">
 	          				<div class="project-list">
 		          				<span class="pjInfoText">
-		          					<div class="pjTitle"><a href=""><%=proj.getProj_title() %></a></div>
-		          					<div class="pjmemName"><span class="fa fa-user"></span>&nbsp;&nbsp;<a href="">개설자 이름</a></div>
-		          					<div class="pjIntro">프로젝트 소개글이 출력됩니다. 글자 수는 제한합니다............</div>
-		          					<div class="pjTag"><a href="">#<%=proj.getTag_name() %>&nbsp;</a></div>         					
+		          					<div class="pjTitle"><a href=""></a></div>
+		          					<div class="pjmemName"><span class="fa fa-user"></span>&nbsp;&nbsp;<a href=""></a></div>
+		          		
+		          					<div class="pjIntro">${proj_list[i].proj_intro}</div>
+		          					<div class="pjTag"><a href="">&nbsp;</a></div>         					
 	          					</span>
 	          					<span class="pjInfoTable">
 	          						<table class="table text-center">
@@ -330,7 +324,7 @@
 	          				</div>          			
 						</div>
 						<br><br>
-<%} %>
+				</c:forEach>
 					
 						<div class="text-right">
 							<button type="button" class="btn moreBtn" onclick="location.href='proj_search.html'">더 보기</button>							

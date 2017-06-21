@@ -65,13 +65,13 @@ public class Developer_ViewDao {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				Developer many = new Developer(); 
-				many.setTag_name(rs.getString("tag_name"));
-				many.setProf_img(rs.getString("prof_img"));
-				many.setProf_name(rs.getString("prof_name"));
-				many.setProf_follower(rs.getInt("prof_follower"));
+				Developer developer = new Developer(); 
+				developer.setTag_name(rs.getString("tag_name"));
+				developer.setProf_img(rs.getString("prof_img"));
+				developer.setProf_name(rs.getString("prof_name"));
+				developer.setProf_follower(rs.getInt("prof_follower"));
 
-				list.add(many);
+				list.add(developer);
 			}
 		}
 

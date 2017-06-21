@@ -71,7 +71,7 @@
 				<ul class="nav pull-right top-menu">
 					<li>
 						<form class="form-inline top-menu-search" method="post"
-							action="/Insu/search?cmd=SEARCH">
+							action="/Project3/search?cmd=SEARCH">
 							<div class="input-group">
 								<input type="text" class="form-control round-form" name="search"
 									size="20" placeholder="통합 검색" />
@@ -178,10 +178,10 @@
 						<div class="tab-pane" id="memRecommend">
 							<div class="row mt">
 <%
-	List list2 = developer.developer_info();
+	list = developer.developer_info();
 	//request.setAttribute("list", list);
 	for (int i = 0; i < 4; i++) {
-		Developer dev = (Developer) list2.get(i);
+		Developer dev = (Developer) list.get(i);
 %>				
 								<!-- 첫 번째 member-->
 								<div class="col-md-3 mb">
@@ -218,10 +218,10 @@
 								<div class="col-lg-12">
 									<div class="row">
 <%
-	List list3 = project.project_info();
+	list = project.project_info();
 	//request.setAttribute("list", list);
-	for (int i = 0; i < list3.size(); i++) {
-		Project proj = (Project) list3.get(i);
+	for (int i = 0; i < list.size(); i++) {
+		Project proj = (Project) list.get(i);
 	
 %>			
 										<!-- 첫번째 모집 -->
@@ -265,10 +265,10 @@
 					</h3>
 					
 <%
-	List list4 = timeline.timeline_info();
+	list = timeline.timeline_info();
 	//request.setAttribute("list", list);
-	for (int i = 0; i < list4.size(); i++) {
-		Portfolio time = (Portfolio) list4.get(i);
+	for (int i = 0; i < list.size(); i++) {
+		Portfolio time = (Portfolio) list.get(i);
 	
 %>	
 					<!-- 첫번째 타임라인 -->
