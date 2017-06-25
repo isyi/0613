@@ -7,13 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import portit.model.db.DBConnectionMgr;
-import portit.model.dto.Developer;
-import portit.model.dto.Media;
-import portit.model.dto.Message;
+import portit.model.dto.Member;
 import portit.model.dto.Portfolio;
-import portit.model.dto.Profile;
 import portit.model.dto.Project;
-import portit.model.dto.Tag;
 
 /**
  * 
@@ -98,7 +94,7 @@ public class SearchDao {
 		return list;
 	}
 	
-	public List searchAll_developer(String keyword) {
+	public List searchAll_member(String keyword) {
 		ArrayList list = new ArrayList();
 		String sql = "select profile.prof_img, profile.prof_name, tag.tag_name, profile.prof_follower "
 				+ "from profile join tag_use "
@@ -113,18 +109,18 @@ public class SearchDao {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				Developer developer = new Developer(); 
-				developer.setTag_name(rs.getString("tag_name"));
-				developer.setProf_img(rs.getString("prof_img"));
-				developer.setProf_name(rs.getString("prof_name"));
-				developer.setProf_follower(rs.getInt("prof_follower"));
+				Member member = new Member(); 
+				member.setTag_name(rs.getString("tag_name"));
+				member.setProf_img(rs.getString("prof_img"));
+				member.setProf_name(rs.getString("prof_name"));
+				member.setProf_follower(rs.getInt("prof_follower"));
 
-				list.add(developer);
+				list.add(member);
 			}
 		}
 
 		catch (Exception err) {
-			System.out.println("developer_info() 에서 오류");
+			System.out.println("member_info() 에서 오류");
 			err.printStackTrace();
 		}
 
@@ -136,13 +132,12 @@ public class SearchDao {
 
 	public List searchAll_proj(String keyword) {
 		ArrayList list = new ArrayList();
-		String sql = "select distinct project.proj_id, tag.tag_name, project.proj_title,"
-						+ " tag.tag_name, project.proj_to, trunc(project.proj_regenddate - sysdate) "
-						+ "from tag join tag_use "
-						+ "on tag.tag_id = tag_use.tag_id "
-						+ "join project "
-						+ "on tag_use.tag_use_type_id = project.proj_id "
-						+ "where tag.tag_name like '%"+keyword+"%'";
+		String sql = "select * "
+				+ "from tag join tag_use "
+				+ "on tag.tag_id = tag_use.tag_id "
+				+ "join project "
+				+ "on tag_use.tag_use_type_id = project.proj_id "
+				+ "where tag.tag_name like '%"+keyword+"%'";
 						
 				
 		try {

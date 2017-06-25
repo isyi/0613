@@ -1,5 +1,4 @@
 <%@page import="portit.model.dto.Project"%>
-<%@page import="portit.model.dto.Developer"%>
 <%@page import="java.util.List"%>
 <%@page import="portit.model.dto.Portfolio"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -29,9 +28,6 @@
 <link href="assets/css/custom.css" rel="stylesheet">
 <link href="assets/css/search.css" rel="stylesheet">
 
-<jsp:useBean id="portfolio" class="portit.model.dao.Portfolio_ViewDao" />
-<jsp:useBean id="developer" class="portit.model.dao.Developer_ViewDao" />
-<jsp:useBean id="project" class="portit.model.dao.Proj_viewDao" />
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -48,128 +44,73 @@
       *********************************************************************************************************************************************************** -->
 		<!--header start-->
 		<header class="header black-bg">
-			<div class="sidebar-toggle-box">
-				<div class="fa fa-bars tooltips" data-placement="right"
-					data-original-title="Toggle Navigation"></div>
-			</div>
 			<!--logo start-->
-			<a href="index.html" class="logo"><b>DASHGUM FREE</b></a>
+			<a href="index.html" class="logo"><b>Port IT</b></a>
 			<!--logo end-->
 			<div class="nav notify-row" id="top_menu">
-				<!--  notification start -->
+				<!--  menu start -->
 				<ul class="nav top-menu">
 					<!-- settings start -->
-					<li class="dropdown"><a data-toggle="dropdown"
-						class="dropdown-toggle" href="index.html#"> <i
-							class="fa fa-tasks"></i> <span class="badge bg-theme">4</span>
-					</a>
-						<ul class="dropdown-menu extended tasks-bar">
-							<div class="notify-arrow notify-arrow-green"></div>
-							<li>
-								<p class="green">You have 4 pending tasks</p>
-							</li>
-							<li><a href="index.html#">
-									<div class="task-info">
-										<div class="desc">DashGum Admin Panel</div>
-										<div class="percent">40%</div>
-									</div>
-									<div class="progress progress-striped">
-										<div class="progress-bar progress-bar-success"
-											role="progressbar" aria-valuenow="40" aria-valuemin="0"
-											aria-valuemax="100" style="width: 40%">
-											<span class="sr-only">40% Complete (success)</span>
-										</div>
-									</div>
-							</a></li>
-							<li><a href="index.html#">
-									<div class="task-info">
-										<div class="desc">Database Update</div>
-										<div class="percent">60%</div>
-									</div>
-									<div class="progress progress-striped">
-										<div class="progress-bar progress-bar-warning"
-											role="progressbar" aria-valuenow="60" aria-valuemin="0"
-											aria-valuemax="100" style="width: 60%">
-											<span class="sr-only">60% Complete (warning)</span>
-										</div>
-									</div>
-							</a></li>
-							<li><a href="index.html#">
-									<div class="task-info">
-										<div class="desc">Product Development</div>
-										<div class="percent">80%</div>
-									</div>
-									<div class="progress progress-striped">
-										<div class="progress-bar progress-bar-info" role="progressbar"
-											aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"
-											style="width: 80%">
-											<span class="sr-only">80% Complete</span>
-										</div>
-									</div>
-							</a></li>
-							<li><a href="index.html#">
-									<div class="task-info">
-										<div class="desc">Payments Sent</div>
-										<div class="percent">70%</div>
-									</div>
-									<div class="progress progress-striped">
-										<div class="progress-bar progress-bar-danger"
-											role="progressbar" aria-valuenow="70" aria-valuemin="0"
-											aria-valuemax="100" style="width: 70%">
-											<span class="sr-only">70% Complete (Important)</span>
-										</div>
-									</div>
-							</a></li>
-							<li class="external"><a href="#">See All Tasks</a></li>
-						</ul></li>
-					<!-- settings end -->
-					<!-- inbox dropdown start-->
+					<li><a href="">Member</a></li>
+					<li><a href="">Portfolio</a></li>
+					<li><a href="">Project</a> <li>
+					
+					<li><a href="">Community</a></li>
+				</ul>
+				<!--  menu end -->
+			</div>
+			
+			<div class="top-menu-right">
+				<ul class="nav pull-right top-menu">
+					<li>
+						<form class="form-inline top-menu-search" method="post"
+							action="/PortIT/search?cmd=SEARCH">
+							<div class="input-group">
+								<input type="text" class="form-control round-form" name="search"
+									size="20" placeholder="통합 검색" />
+								<span class="input-group-btn">
+									<button type="submit" class="btn btn-default round-form">
+										<span class="glyphicon glyphicon-search"></span>
+									</button>
+								</span>
+							</div>
+						</form>
+					</li>
 					<li id="header_inbox_bar" class="dropdown"><a
 						data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
-							<i class="fa fa-envelope-o"></i> <span class="badge bg-theme">5</span>
+							<i class="fa fa-bell"></i> <span class="badge bg-theme"></span>
 					</a>
 						<ul class="dropdown-menu extended inbox">
-							<div class="notify-arrow notify-arrow-green"></div>
+							<div class="notify-arrow notify-arrow-yellow"></div>
 							<li>
-								<p class="green">You have 5 new messages</p>
+								<p class="yellow">Notification</p>
 							</li>
-							<li><a href="index.html#"> <span class="photo"><img
-										alt="avatar" src="assets/img/ui-zac.jpg"></span> <span
-									class="subject"> <span class="from">Zac Snider</span> <span
-										class="time">Just now</span>
-								</span> <span class="message"> Hi mate, how is everything? </span>
+							<li><a href=""> <span>구분</span>&nbsp;/&nbsp; <span
+									class="time">Just now</span> <span class="message">[누구누구]님이
+										내 포트포리오를 좋아합니다.</span>
 							</a></li>
-							<li><a href="index.html#"> <span class="photo"><img
-										alt="avatar" src="assets/img/ui-divya.jpg"></span> <span
-									class="subject"> <span class="from">Divya Manian</span>
-										<span class="time">40 mins.</span>
-								</span> <span class="message"> Hi, I need your help with this. </span>
-							</a></li>
-							<li><a href="index.html#"> <span class="photo"><img
-										alt="avatar" src="assets/img/ui-danro.jpg"></span> <span
-									class="subject"> <span class="from">Dan Rogers</span> <span
-										class="time">2 hrs.</span>
-								</span> <span class="message"> Love your new Dashboard. </span>
-							</a></li>
-							<li><a href="index.html#"> <span class="photo"><img
-										alt="avatar" src="assets/img/ui-sherman.jpg"></span> <span
-									class="subject"> <span class="from">Dj Sherman</span> <span
-										class="time">4 hrs.</span>
-								</span> <span class="message"> Please, answer asap. </span>
-							</a></li>
-							<li><a href="index.html#">See all messages</a></li>
+							<li><a href="">더보기</a></li>
 						</ul></li>
-					<!-- inbox dropdown end -->
-				</ul>
-				<!--  notification end -->
-			</div>
-			<div class="top-menu">
-				<ul class="nav pull-right top-menu">
-					<li><a class="logout" href="login.html">Logout</a></li>
+					<li id="header_inbox_bar" class="dropdown mypage"><a
+						data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
+							<img alt="avatar" src="assets/img/ui-danro.jpg"
+							class="img-circle">
+					</a>
+						<ul class="dropdown-menu extended inbox">
+							<div class="notify-arrow notify-arrow-yellow"></div>
+							<li>
+								<p class="yellow">김수연 님</p>
+							</li>
+							<li><a href="">내 프로필</a></li>
+							<li><a href="">팔로잉한 멤버</a> <a href="">북마크한 포트폴리오</a></li>
+							<li><a href="">개인정보 설정</a></li>
+							<li><a class="logout" href="login.html">로그아웃</a></li>
+						</ul></li>
 				</ul>
 			</div>
 		</header>
 		<!--header end-->
+	</section>
 
 
 		<!-- **********************************************************************************************************************************************************
@@ -208,17 +149,17 @@
 							<div class="sortKey col-md-1"><b>태그</b></div>										
 							<div class="col-md-11">	
 								<!-- 인기 태그 6개 띄우기 -->							
-								<input class="btn poptag" type="button"  value="java" onclick="fnAppendItem()"/>
-								<input class="btn poptag" type="button"  value="c" onclick="fnAppendItem()"/>
-								<input class="btn poptag" type="button"  value="c++" onclick="fnAppendItem()"/>
-								<input class="btn poptag" type="button"  value="c#" onclick="fnAppendItem()"/>
-								<input class="btn poptag" type="button"  value="jsp" onclick="fnAppendItem()"/>
-								<input class="btn poptag" type="button"  value="servlet" onclick="fnAppendItem()"/>								
+								<input class="btn poptag" type="button" name="language" value="java" onclick="fnAppendItem()"/>
+								<input class="btn poptag" type="button" name="language" value="c" onclick="fnAppendItem()"/>
+								<input class="btn poptag" type="button" name="language" value="c++" onclick="fnAppendItem()"/>
+								<input class="btn poptag" type="button" name="language" value="c#" onclick="fnAppendItem()"/>
+								<input class="btn poptag" type="button" name="language" value="jsp" onclick="fnAppendItem()"/>
+								<input class="btn poptag" type="button" name="language" value="servlet" onclick="fnAppendItem()"/>								
 								.....
 							</div>
 							<br><br>
 							<div class="col-md-offset-1 col-md-4">
-								<input type="text" class="form-control taginput" id="language" placeholder="검색하고 싶은 태그를 입력하세요." onchange="fnAppendItem2()" />
+								<input type="text" class="form-control taginput" id="language" name="language" placeholder="검색하고 싶은 태그를 입력하세요." onchange="fnAppendItem2()" />
 							</div>		
 							<br><br>
 							<hr />
@@ -234,9 +175,9 @@
 				
 					<div class="pfResult mt mb" id="pfResult">
 						<div class="col-md-12 mb">
-						<h4>포트폴리오(200개)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
-
-					<c:forEach begin="0" end="${port_list.size()-1 }" var="i" >	
+						<h4>포트폴리오(${port_list.size()} 건)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
+	<c:if test="${port_list.size() != 0 }">
+		<c:forEach begin="0" end="3" var="i" >	
 						<!-- 첫번째 포트폴리오 -->
 						<div class="col-md-3 mb">
 							<div class="portfolio-simple">
@@ -258,65 +199,79 @@
 							</div>
 						</div>		
 					</c:forEach>
+			</c:if>	
+<c:if test="${port_list.size() == 0 }">
+	검색된 결과가 없습니다.
+</c:if>	
 						</div>
-						<div class="text-right">
-							<button type="button" class="btn moreBtn" onclick="location.href='port_search.html'">더 보기</button>							
-						</div>
+						
+							<div class="text-right">
+								<button type="button" class="btn moreBtn" onclick="location.href='pfSearch.jsp'">더 보기</button>							
+							</div>
+
 					</div>
 			
 					<hr class="resultLine" id="memResult"/>
 
-					<!-- 인물 결과 -->
+					<!-- 멤버 결과 -->
 					<div class="memResult mt mb" >
 						<div class="col-md-12 mb">
-						<h4>인물(150명)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
+						<h4>멤버(${mem_list.size()}명)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
 						
-					<c:forEach begin="0" end="${dev_list.size()-1 }" var="i" >	
+<c:if test="${mem_list.size() != 0 }">				
+				<c:forEach begin="0" end="3" var="i" >	
 						<!-- 첫 번째 member-->
 						<div class="col-md-3 mb">
 	          				<div class="member-simple">
 		          				<div class="simple-content text-center">	      
-			          				<img class="memImg img-circle" alt="avatar" src="${dev_list[i].prof_img}"/>   
+			          				<img class="memImg img-circle" alt="avatar" src="${mem_list[i].prof_img}"/>   
 			         				<div>
-			         					<div class="memName"><a href=""> ${dev_list[i].prof_name}</a></div>
-			         					<div class="memTag"><a href=""># ${dev_list[i].tag_name}&nbsp;</a></div>
+			         					<div class="memName"><a href=""> ${mem_list[i].prof_name}</a></div>
+			         					<div class="memTag"><a href=""># ${mem_list[i].tag_name}&nbsp;</a></div>
 			         					<div class="memFollow">
 			         						<span class="fa fa-user"></span>&nbsp;&nbsp;
-			         						<span class="memFollowCount">${dev_list[i].prof_follower}</span>
+			         						<span class="memFollowCount">${mem_list[i].prof_follower}</span>
 			         					</div>
 			         				</div>
 		          				</div>          				
 	          				</div>
 	          			</div> 
         			</c:forEach>
-        			
-						</div>	
+        	</c:if>	
+<c:if test="${mem_list.size() == 0 }">
+	검색된 결과가 없습니다.
+</c:if>	
+						</div>
+						
+								
 						<div class="text-right">
 							<button type="button" class="btn moreBtn" onclick="location.href='person_search.html'">더 보기</button>							
 						</div>
+							
 					</div>
 						
 					<hr class="resultLine" id="projResult"/>
 
 					<!-- 프로젝트 결과 -->
 					<div class="projResult mt mb" >
-						<h4>프로젝트(60건)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
+						<h4>프로젝트(${proj_list.size()}건)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
 
-				<c:forEach begin="0" end="${proj_list.size() }" var="i" >	
+<c:if test="${proj_list.size() != 0 }">
+				<c:forEach begin="0" end="3" var="i" >	
 					<!-- 첫번째 프로젝트 -->
 						<div class="col-md-12 mb">
 	          				<div class="project-list">
 		          				<span class="pjInfoText">
-		          					<div class="pjTitle"><a href=""></a></div>
+		          					<div class="pjTitle"><a href="">${proj_list[i].proj_title}</a></div>
 		          					<div class="pjmemName"><span class="fa fa-user"></span>&nbsp;&nbsp;<a href=""></a></div>
 		          		
 		          					<div class="pjIntro">${proj_list[i].proj_intro}</div>
-		          					<div class="pjTag"><a href="">&nbsp;</a></div>         					
+		          					<div class="pjTag"><a href="">#${proj_list[i].tag_name}&nbsp;</a></div>         					
 	          					</span>
 	          					<span class="pjInfoTable">
 	          						<table class="table text-center">
 	          							<tr><td>백엔드개발자</td></tr>
-	          							<tr><td>3 명</td></tr>
+	          							<tr><td>${proj_list[i].proj_to} 명</td></tr>
 	          							<tr><td>마감일까지 D&nbsp;-&nbsp;5</td></tr>
 	          							<tr><td></td></tr>
 	          						</table>
@@ -325,7 +280,10 @@
 						</div>
 						<br><br>
 				</c:forEach>
-					
+</c:if>	
+<c:if test="${proj_list.size() == 0 }">
+	검색된 결과가 없습니다.
+</c:if>			
 						<div class="text-right">
 							<button type="button" class="btn moreBtn" onclick="location.href='proj_search.html'">더 보기</button>							
 						</div>

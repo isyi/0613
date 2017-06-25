@@ -12,8 +12,14 @@ public class Project {
 	private int proj_period;
 	private Date proj_regenddate;
 	private String tag_name;
+	private String prof_name;
 
-
+	public String getProf_name() {
+		return prof_name;
+	}
+	public void setProf_name(String prof_name) {
+		this.prof_name = prof_name;
+	}
 	public String getTag_name() {
 		return tag_name;
 	}
