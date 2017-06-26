@@ -1,5 +1,5 @@
 var count = 0;
-function fnAppendItem(){
+function fnAppendItem(language){
 	count++;
 	
 	var newSpan = document.createElement("span"); 
@@ -10,7 +10,9 @@ function fnAppendItem(){
 	newSpan.innerHTML = window.event.target.value +"<input type='button' class='btn delete' value='x' onclick='fnDeleteItem("+ count +")'/>"
 	
 	var itemList = document.getElementById("itemList");
-	itemList.appendChild(newSpan);			
+	itemList.appendChild(newSpan);
+	
+	document.language.submit();
 }
 
 function fnDeleteItem(idx){
@@ -35,5 +37,7 @@ function fnAppendItem2(){
 	newSpan.innerHTML = window.event.target.value +"<input type='button' class='btn delete' value='x' onclick='fnDeleteItem("+ count +")'/>"
 	
 	var itemList = document.getElementById("itemList");
-	itemList.appendChild(newSpan);			
+	itemList.appendChild(newSpan);	
+	
+	document.language.submit();
 }

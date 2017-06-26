@@ -95,12 +95,56 @@ public class SearchDao {
 	}
 	
 	/**
-	 * 포트폴리오 인기순
+	 * 포트폴리오 다중 검색 (오버로딩) (검색조건 태그 2개)
 	 */
-	public List searchAll_port2(String keyword) {
+	public List searchAll_port(String keyword, String keyword2) {
 		String sql = "select distinct MEDIA_LIBRARY.ML_PATH, TAG.TAG_NAME, portfolio.PF_TITLE ,Profile.PROF_NAME, portfolio.PF_LIKE "
 				+ "from MEDIA_LIBRARY, TAG, Profile, portfolio, prof_pf, TAG_USE "
-				+ "where tag.tag_name like '%"+keyword+"%'"
+				+ "where tag.tag_name like '%"+keyword+"%' and tag.tag_name like '%"+keyword2+"%' "
+				+ "and prof_pf.PROF_ID = Profile.PROF_ID  "
+				+ "and prof_pf.PF_ID = portfolio.PF_ID and TAG_USE.TAG_ID = TAG.TAG_ID "
+				+ "and TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID "
+				+ "and MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID"
+				+ "order by portfolio.PF_LIKE desc";
+		
+		
+		ArrayList list = new ArrayList();
+		try {
+			
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Portfolio portfolio = new Portfolio(); 
+				
+				portfolio.setMl_path(rs.getString("ml_path"));
+				portfolio.setTag_name(rs.getString("tag_name"));
+				portfolio.setPf_title(rs.getString("pf_title"));
+				portfolio.setPf_like(rs.getInt("pf_like"));
+				portfolio.setProf_name(rs.getString("prof_name"));
+				
+				list.add(portfolio);
+			}
+		}
+		
+		catch (Exception err) {
+			System.out.println("searchAll() 에서 오류");
+			err.printStackTrace();
+		}
+		
+		finally {
+			freeConnection();
+		}
+		return list;
+	}
+	
+	/**
+	 * 포트폴리오 다중 검색 (오버로딩) (검색조건 태그 3개)
+	 */
+	public List searchAll_port(String keyword, String keyword2, String keyword3) {
+		String sql = "select distinct MEDIA_LIBRARY.ML_PATH, TAG.TAG_NAME, portfolio.PF_TITLE ,Profile.PROF_NAME, portfolio.PF_LIKE "
+				+ "from MEDIA_LIBRARY, TAG, Profile, portfolio, prof_pf, TAG_USE "
+				+ "where tag.tag_name like '%"+keyword+"%' and tag.tag_name like '%"+keyword2+"%' tag.tag_name like '%"+keyword3+"%' "
 				+ "and prof_pf.PROF_ID = Profile.PROF_ID  "
 				+ "and prof_pf.PF_ID = portfolio.PF_ID and TAG_USE.TAG_ID = TAG.TAG_ID "
 				+ "and TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID "

@@ -145,7 +145,7 @@
 							</div>
 							<div class="col-md-11">
 								<a href="#">최신순</a> 
-								<a href="javascript:fnRead()">인기순</a> 
+								<a href="#">인기순</a> 
 								<a href="#">랜덤</a>
 							</div>
 						</div>
@@ -155,16 +155,16 @@
 						</div>
 						<div class="col-md-11">
 							<!-- 인기 태그 6개 띄우기 -->
-							<input class="btn poptag" type="button" value="JAVA" name="language" onclick="fnAppendItem()" /> 
-							<input class="btn poptag" type="button" value="C" name="language" onclick="fnAppendItem()" /> 
-							<input class="btn poptag" type="button" value="c++" name="language" onclick="fnAppendItem()" /> 
-							<input class="btn poptag" type="button" value="c#" name="language" onclick="fnAppendItem()" /> 
-							<input class="btn poptag" type="button" value="jsp" name="language" onclick="fnAppendItem()" /> 
-							<input class="btn poptag" type="button" value="servlet" name="language" onclick="fnAppendItem()" /> .....
+							<input class="btn poptag" type="button" value="JAVA" name="language" onclick="fnAppendItem(JAVA)" /> 
+							<input class="btn poptag" type="button" value="C" name="language" onclick="fnAppendItem(C)" /> 
+							<input class="btn poptag" type="button" value="c++" name="language" onclick="fnAppendItem(C++)" /> 
+							<input class="btn poptag" type="button" value="Eclipse" name="language" onclick="fnAppendItem(ECLIPSE)" /> 
+							<input class="btn poptag" type="button" value="jsp" name="language" onclick="fnAppendItem(JSP)" /> 
+							<input class="btn poptag" type="button" value="servlet" name="language" onclick="fnAppendItem(SERVLET)" /> .....
 						</div>
 						<br> <br>
 						<div class="col-md-offset-1 col-md-4">
-							<input type="text" class="form-control taginput" id="language" name="language2"
+							<input type="text" class="form-control taginput" id="language" name="language"
 								placeholder="검색하고 싶은 태그를 입력하세요." onchange="fnAppendItem2()" />
 						</div>
 						<br> <br>
@@ -177,7 +177,7 @@
 				
 					<div class="pfResult mt mb" id="pfResult">
 						<div class="col-md-12 mb">
-						
+				
 	<c:if test="${port_list.size() != 0 }">
 		<c:forEach begin="0" end="${port_list.size() }" var="i" >	
 						<!-- 포트폴리오 -->
