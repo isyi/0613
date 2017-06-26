@@ -176,8 +176,8 @@
 					<div class="pfResult mt mb" id="pfResult">
 						<div class="col-md-12 mb">
 						<h4>포트폴리오(${port_list.size()} 건)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
-	<c:if test="${port_list.size() != 0 }">
-		<c:forEach begin="0" end="3" var="i" >	
+		<c:if test="${port_list.size() != 0 }">
+				<c:forEach begin="0" end="3" var="i" >	
 						<!-- 첫번째 포트폴리오 -->
 						<div class="col-md-3 mb">
 							<div class="portfolio-simple">
@@ -200,9 +200,9 @@
 						</div>		
 					</c:forEach>
 			</c:if>	
-<c:if test="${port_list.size() == 0 }">
-	검색된 결과가 없습니다.
-</c:if>	
+			<c:if test="${port_list.size() == 0 }">
+				검색된 결과가 없습니다.
+			</c:if>	
 						</div>
 						
 							<div class="text-right">
@@ -218,7 +218,7 @@
 						<div class="col-md-12 mb">
 						<h4>멤버(${mem_list.size()}명)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
 						
-<c:if test="${mem_list.size() != 0 }">				
+		<c:if test="${mem_list.size() != 0 }">			
 				<c:forEach begin="0" end="3" var="i" >	
 						<!-- 첫 번째 member-->
 						<div class="col-md-3 mb">
@@ -238,14 +238,14 @@
 	          			</div> 
         			</c:forEach>
         	</c:if>	
-<c:if test="${mem_list.size() == 0 }">
-	검색된 결과가 없습니다.
-</c:if>	
+			<c:if test="${mem_list.size() == 0 }">
+				검색된 결과가 없습니다.
+			</c:if>	
 						</div>
 						
 								
 						<div class="text-right">
-							<button type="button" class="btn moreBtn" onclick="location.href='person_search.html'">더 보기</button>							
+							<button type="button" class="btn moreBtn" onclick="location.href='memSearch.jsp'">더 보기</button>							
 						</div>
 							
 					</div>
@@ -256,7 +256,7 @@
 					<div class="projResult mt mb" >
 						<h4>프로젝트(${proj_list.size()}건)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
 
-<c:if test="${proj_list.size() != 0 }">
+			<c:if test="${proj_list.size() != 0 }">
 				<c:forEach begin="0" end="3" var="i" >	
 					<!-- 첫번째 프로젝트 -->
 						<div class="col-md-12 mb">
@@ -280,12 +280,12 @@
 						</div>
 						<br><br>
 				</c:forEach>
-</c:if>	
-<c:if test="${proj_list.size() == 0 }">
-	검색된 결과가 없습니다.
-</c:if>			
+			</c:if>	
+			<c:if test="${proj_list.size() == 0 }">
+				검색된 결과가 없습니다.
+			</c:if>			
 						<div class="text-right">
-							<button type="button" class="btn moreBtn" onclick="location.href='proj_search.html'">더 보기</button>							
+							<button type="button" class="btn moreBtn" onclick="location.href='projSearch.jsp'">더 보기</button>							
 						</div>
 					</div>
 				</div>

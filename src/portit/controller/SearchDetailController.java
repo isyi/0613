@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import portit.model.dao.Portfolio_ViewDao;
 import portit.model.dao.SearchDao;
@@ -23,16 +24,18 @@ public class SearchDetailController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		resp.setContentType("text/html; charset=UTF-8");
+		req.setCharacterEncoding("UTF-8");
+		
 		String cmd = req.getParameter("cmd");
 		String url = null;
+		HttpSession session = req.getSession();
 		
 		//검색어 결과
 		String pfSearch = req.getParameter("pfSearch");
 		pfSearch = pfSearch.toUpperCase();
 		req.setAttribute("pfSearch", pfSearch);
 		
-		//String language = req.getParameter("language2");
-		//req.setAttribute("language", language);
+		String pf_like = req.getParameter("pf_like");
 		
 		//포트폴리오 Dao 호출
 		SearchDao searchDao = new SearchDao();	

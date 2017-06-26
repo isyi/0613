@@ -32,6 +32,8 @@ public class SearchController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html; charset=UTF-8");
+		req.setCharacterEncoding("UTF-8");
+		
 		String cmd = req.getParameter("cmd");
 		String url = null;
 		HttpSession session = req.getSession();

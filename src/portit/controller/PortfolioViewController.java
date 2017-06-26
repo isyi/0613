@@ -31,18 +31,36 @@ public class PortfolioViewController extends HttpServlet {
 		session.removeAttribute("search");
 		//검색어 결과
 		String pfSearch = req.getParameter("pfSearch");
-		pfSearch = pfSearch.toUpperCase();
+		String memSearch = req.getParameter("memSearch");
+		String projSearch = req.getParameter("projSearch");
+		
+		//pfSearch = pfSearch.toUpperCase();
+		//memSearch = memSearch.toUpperCase();
+		//projSearch = projSearch.toUpperCase();
+		
 		req.setAttribute("pfSearch", pfSearch);
+		req.setAttribute("memSearch", memSearch);
+		req.setAttribute("projSearch", projSearch);
 		
 		//포트폴리오 Dao 호출
 		SearchDao searchDao = new SearchDao();		
 		List port_list = searchDao.searchAll_port(pfSearch);
+		List mem_list = searchDao.searchAll_member(memSearch);
+		List proj_list = searchDao.searchAll_proj(projSearch);
 		
 		//Controller -> Model로 넘겨주기 위한 변수
 		req.setAttribute("port_list", port_list);
+		req.setAttribute("mem_list", mem_list);
+		req.setAttribute("proj_list", proj_list);
 		
 		if(cmd.equals("PFSEARCH")){
 			url="/pfSearch.jsp";
+		}
+		else if(cmd.equals("MEMSEARCH")){
+			url="/memSearch.jsp";
+		}
+		else if(cmd.equals("PROJSEARCH")){
+			url="/projSearch.jsp";
 		}
 
 		RequestDispatcher view = req.getRequestDispatcher(url);

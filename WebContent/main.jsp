@@ -39,11 +39,6 @@
     <![endif]-->
 </head>
 
-<jsp:useBean id="portfolio" class="portit.model.dao.Portfolio_ViewDao" />
-<jsp:useBean id="member" class="portit.model.dao.Member_ViewDao" />
-<jsp:useBean id="project" class="portit.model.dao.Proj_viewDao" />
-<jsp:useBean id="timeline" class="portit.model.dao.Timeline_ViewDao" />
-
 <body>
 	<section id="container">
 		<!-- **********************************************************************************************************************************************************
@@ -170,11 +165,11 @@
 								</c:if>
 								<div class="text-right">
 									<button type="button" class="btn moreBtn"
-										onclick="location.href='pfList.jsp'">더 보기</button>
+										onclick="location.href='pfList.jsp'">더 보기</button>						
 								</div>
 							</div>
 						</div>
-
+		
 
 						<!-- 개발자 패널 -->
 						<div class="tab-pane" id="memRecommend">
@@ -247,12 +242,16 @@
 										<c:if test="${proj_list.size() == 0 }">
 											검색된 결과가 없습니다.
 										</c:if>
-
+										<div class="text-right">
+											<button type="button" class="btn moreBtn"
+												onclick="location.href='projSearch.jsp'">더 보기</button>
+										</div>
 
 									</div>
 								</div>
 							</div>
 						</div>
+						
 					</div>
 				</div>
 
