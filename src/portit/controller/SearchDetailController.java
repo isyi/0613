@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import portit.model.dao.Portfolio_ViewDao;
 import portit.model.dao.SearchDao;
+import portit.model.dto.Portfolio;
 
 
 @WebServlet(urlPatterns="/detailSearch")
@@ -26,59 +27,54 @@ public class SearchDetailController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		resp.setContentType("text/html; charset=UTF-8");
 		req.setCharacterEncoding("UTF-8");
+		HttpSession session = req.getSession();
 		
 		String cmd = req.getParameter("cmd");
 		String url = null;
-		HttpSession session = req.getSession();
 		
 		//검색어 결과
 		String pfSearch = req.getParameter("pfSearch");
+		String memSearch = req.getParameter("memSearch");
+		String projSearch = req.getParameter("projSearch");
 		//pfSearch = pfSearch.toUpperCase();
-		req.setAttribute("pfSearch", pfSearch);
 		
-		//0,1,2(3개까지 선택 가능)
-		String[] lang = new String[2];
+		//1~6까지의 값을 불러옴 1,3,5는 최신순 정렬 2,4,6은 인기순 정렬
+		int list_value=Integer.parseInt(req.getParameter("list_value"));
 		
-		String st1 = ""; 
-		String st2 = ""; 
-		String st3 = ""; 
-		
-		String language = req.getParameter("language");
-		/*
-		for(int j=0; j<=2; j++){
-			for(int i=0; i<language.length; i++){
-				if(language != null){
-					lang[j] = language[i];
-					continue;
-				}
-			}
-			st1 = lang[0];
-			st2 = lang[1];
-			st3 = lang[2];
+		//lineup = true(최신순) / false(인기순)
+		boolean lineup = true;
+	
+		SearchDao dao = new SearchDao();
+		if(list_value == 1){
+			req.setAttribute("port_list",dao.searchAll_port(pfSearch, lineup));
+		}		
+		else if(list_value == 2){
+			req.setAttribute("port_list",dao.searchAll_port("", !lineup));		
+		}
+		else if(list_value == 3){
+			req.setAttribute("mem_list", dao.searchAll_member(memSearch, lineup));
+		}
+		else if(list_value == 4){
+			req.setAttribute("mem_list", dao.searchAll_member("", !lineup));
+		}
+		else if(list_value == 5){
+			req.setAttribute("proj_list", dao.searchAll_proj(projSearch, lineup));
+		}
+		else if(list_value == 6){
+			req.setAttribute("proj_list", dao.searchAll_proj("", !lineup));
 		}
 		
-		List cho_lang = null;
 		
-		cho_lang.add(st1);
-		cho_lang.add(st2);
-		cho_lang.add(st3);	
-		*/
 		
-		//포트폴리오 Dao 호출
-		SearchDao searchDao = new SearchDao();	
-		List port_list;
-		List port_list2;
 		
-		port_list = searchDao.searchAll_port(pfSearch);		
-		//cho_lang = searchDao.searchAll_port(st1, st2);
-		port_list2 = searchDao.searchAll_port(language);
-				
-		//Controller -> Model로 넘겨주기 위한 변수
-		req.setAttribute("port_list", port_list);
-		//req.setAttribute("language", cho_lang);
-		
-		if(cmd.equals("DETAILSEARCH")){
+		if(cmd.equals("PFDETAIL")){
 			url="/pfSearch.jsp";
+		}
+		else if(cmd.equals("MEMDETAIL")){
+			url="/memSearch.jsp";
+		}
+		else if(cmd.equals("PROJDETAIL")){
+			url="projSearch.jsp";
 		}
 
 		RequestDispatcher view = req.getRequestDispatcher(url);

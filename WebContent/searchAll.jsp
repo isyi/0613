@@ -170,29 +170,36 @@
 					<br>	
 					<br>
 					<hr class="resultLine" id="pfResult"/>
-			
+	
+${port_list.size()}${port_list[1].tag_name}
 					<!-- 포트폴리오 결과 -->
-				
+									
 					<div class="pfResult mt mb" id="pfResult">
 						<div class="col-md-12 mb">
 						<h4>포트폴리오(${port_list.size()} 건)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
+		
 		<c:if test="${port_list.size() != 0 }">
-				<c:forEach begin="0" end="3" var="i" >	
-						<!-- 첫번째 포트폴리오 -->
+				<c:forEach begin="0" end="${port_list.size()}" var="i" >	
+						<!-- 포트폴리오 -->
 						<div class="col-md-3 mb">
 							<div class="portfolio-simple">
 								<div class="pfImg"></div>
 								<div class="pfInfo">
 									<div class="simple-content">
 										<div class="pfTag">
-											<a href="">#${port_list[i].tag_name}&nbsp;</a>
+											<a href="javascript:tag_name('${port_list[i].tag_name}')">#${port_list[i].tag_name}&nbsp;</a>
 										</div>
 										<div class="pfTitle">
-											<a href="">${port_list[i].pf_title} </a>
+											<a href="javascript:pf_title('${port_list[i].pf_id}')">${port_list[i].pf_title} </a>
 										</div>
 										<div class="pfBottom">
-											<span class="pfmemName"><a href="">${port_list[i].prof_name}</a></span> <span
-												class="pfLikeCount"><span class="fa fa-heart"></span>&nbsp;&nbsp;${port_list[i].pf_like}</span>
+											<span class="pfmemName">
+												<a href="javascript:prof_name('${port_list[i].prof_name}')">
+													${port_list[i].prof_name} </a>
+											</span> 
+											<span class="pfLikeCount">
+												<span class="fa fa-heart"></span>&nbsp;&nbsp;${port_list[i].pf_like}
+											</span>
 										</div>
 									</div>
 								</div>
@@ -219,15 +226,15 @@
 						<h4>멤버(${mem_list.size()}명)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
 						
 		<c:if test="${mem_list.size() != 0 }">			
-				<c:forEach begin="0" end="3" var="i" >	
-						<!-- 첫 번째 member-->
+				<c:forEach begin="0" end="${mem_list.size()}" var="i" >	
+						<!-- member -->
 						<div class="col-md-3 mb">
 	          				<div class="member-simple">
 		          				<div class="simple-content text-center">	      
 			          				<img class="memImg img-circle" alt="avatar" src="${mem_list[i].prof_img}"/>   
 			         				<div>
 			         					<div class="memName"><a href=""> ${mem_list[i].prof_name}</a></div>
-			         					<div class="memTag"><a href=""># ${mem_list[i].tag_name}&nbsp;</a></div>
+			         					<div class="memTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')"># ${mem_list[i].tag_name}&nbsp;</a></div>
 			         					<div class="memFollow">
 			         						<span class="fa fa-user"></span>&nbsp;&nbsp;
 			         						<span class="memFollowCount">${mem_list[i].prof_follower}</span>
@@ -257,16 +264,16 @@
 						<h4>프로젝트(${proj_list.size()}건)&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
 
 			<c:if test="${proj_list.size() != 0 }">
-				<c:forEach begin="0" end="3" var="i" >	
-					<!-- 첫번째 프로젝트 -->
+				<c:forEach begin="0" end="${proj_list.size()}" var="i" >	
+					<!-- 프로젝트 -->
 						<div class="col-md-12 mb">
 	          				<div class="project-list">
 		          				<span class="pjInfoText">
-		          					<div class="pjTitle"><a href="">${proj_list[i].proj_title}</a></div>
+		          					<div class="pjTitle"><a href="javascript:proj_title('${proj_list[i].proj_id}')">${proj_list[i].proj_title}</a></div>
 		          					<div class="pjmemName"><span class="fa fa-user"></span>&nbsp;&nbsp;<a href=""></a></div>
 		          		
 		          					<div class="pjIntro">${proj_list[i].proj_intro}</div>
-		          					<div class="pjTag"><a href="">#${proj_list[i].tag_name}&nbsp;</a></div>         					
+		          					<div class="pjTag"><a href="javascript:tag_name('${mem_list[i].tag_name}')">#${proj_list[i].tag_name}&nbsp;</a></div>         					
 	          					</span>
 	          					<span class="pjInfoTable">
 	          						<table class="table text-center">
@@ -322,5 +329,56 @@
 	<!-- detail search bar -->
 	<script src="assets/js/search.js"></script>
 	
+	<!-- 포트폴리오 정보 -->
+	<script>	
+	function pf_title(pf_id){
+		document.pf_title.pf_id.value = pf_id;
+		document.pf_title.submit();
+	}
+	function tag_name(tag_name){
+		document.tag_name.pf_id.value = tag_name;
+		document.tag_name.submit();	
+	}
+	function prof_name(prof_name){
+		document.prof_name.pf_id.value = prof_name;
+		document.prof_name.submit();
+	}
+	</script>
+
+	<form name="pf_title" method="post" action="/PortIT/search?cmd=SEARCH">
+		<input type="hidden" name="pf_id" />
+	</form>
+	<form name="tag_name" method="post" action="/PortIT/search?cmd=SEARCH">
+		<input type="hidden" name="tag_name" />
+	</form>
+	<form name="prof_name" method="post" action="/PortIT/search?cmd=SEARCH">
+		<input type="hidden" name="prof_name" />
+	</form>
+	
+	<!-- 멤버 정보 -->
+	<script>	
+	function mem_name(mem_id){
+		document.mem_name.pf_id.value = mem_id;
+		document.mem_name.submit();
+	}
+	</script>
+
+	<form name="mem_name" method="post" action="/PortIT/search?cmd=SEARCH">
+		<input type="hidden" name="mem_id" />
+	</form>
+	
+	<!-- 프로젝트 정보 -->
+	<script>	
+	function proj_title(proj_id){
+		document.proj_title.pf_id.value = proj_id;
+		document.proj_title.submit();
+	}
+	</script>
+
+	<form name="proj_title" method="post" action="/PortIT/search?cmd=SEARCH">
+		<input type="hidden" name="proj_id" />
+	</form>
+
+			
 </body>
 </html>

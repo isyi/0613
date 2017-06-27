@@ -1,7 +1,7 @@
 <%@page import="portit.model.dto.Portfolio"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
@@ -64,7 +64,7 @@
 							action="/PortIT/search?cmd=SEARCH">
 							<div class="input-group">
 								<input type="text" class="form-control round-form" name="search"
-									size="20" placeholder="ÅëÇÕ °Ë»ö" /> <span class="input-group-btn">
+									size="20" placeholder="í†µí•© ê²€ìƒ‰" /> <span class="input-group-btn">
 									<button type="submit" class="btn btn-default round-form">
 										<span class="glyphicon glyphicon-search"></span>
 									</button>
@@ -81,11 +81,11 @@
 							<li>
 								<p class="yellow">Notification</p>
 							</li>
-							<li><a href=""> <span>±¸ºĞ</span>&nbsp;/&nbsp; <span
-									class="time">Just now</span> <span class="message">[´©±¸´©±¸]´ÔÀÌ
-										³» Æ÷Æ®Æ÷¸®¿À¸¦ ÁÁ¾ÆÇÕ´Ï´Ù.</span>
+							<li><a href=""> <span>êµ¬ë¶„</span>&nbsp;/&nbsp; <span
+									class="time">Just now</span> <span class="message">[ëˆ„êµ¬ëˆ„êµ¬]ë‹˜ì´
+										ë‚´ í¬íŠ¸í¬ë¦¬ì˜¤ë¥¼ ì¢‹ì•„í•©ë‹ˆë‹¤.</span>
 							</a></li>
-							<li><a href="">´õº¸±â</a></li>
+							<li><a href="">ë”ë³´ê¸°</a></li>
 						</ul></li>
 					<li id="header_inbox_bar" class="dropdown mypage"><a
 						data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
@@ -95,12 +95,12 @@
 						<ul class="dropdown-menu extended inbox">
 							<div class="notify-arrow notify-arrow-yellow"></div>
 							<li>
-								<p class="yellow">±è¼ö¿¬ ´Ô</p>
+								<p class="yellow">ê¹€ìˆ˜ì—° ë‹˜</p>
 							</li>
-							<li><a href="">³» ÇÁ·ÎÇÊ</a></li>
-							<li><a href="">ÆÈ·ÎÀ×ÇÑ ¸â¹ö</a> <a href="">ºÏ¸¶Å©ÇÑ Æ÷Æ®Æú¸®¿À</a></li>
-							<li><a href="">°³ÀÎÁ¤º¸ ¼³Á¤</a></li>
-							<li><a class="logout" href="login.html">·Î±×¾Æ¿ô</a></li>
+							<li><a href="">ë‚´ í”„ë¡œí•„</a></li>
+							<li><a href="">íŒ”ë¡œì‰í•œ ë©¤ë²„</a> <a href="">ë¶ë§ˆí¬í•œ í¬íŠ¸í´ë¦¬ì˜¤</a></li>
+							<li><a href="">ê°œì¸ì •ë³´ ì„¤ì •</a></li>
+							<li><a class="logout" href="login.html">ë¡œê·¸ì•„ì›ƒ</a></li>
 						</ul></li>
 				</ul>
 			</div>
@@ -116,14 +116,14 @@
 	<section class="container">
 		<section class="wrapper site-min-height">
 			<div class="col-md-12 mt search" id="searchPf">
-				<!-- °Ë»ö¾î °Ë»ö Æû -->
+				<!-- ê²€ìƒ‰ì–´ ê²€ìƒ‰ í¼ -->
 
 				<div class="col-md-12 mt mb">
 					<form class="col-md-10 searchKeyword" method="post"
-						action="/PortIT/pfSearch?cmd=PFSEARCH">
+						action="/PortIT/SearchView?cmd=PFSEARCH">
 						<div class="form-group col-md-11">
-							<input type="text" class="form-control" name="pfSearch" value="${sessionScope.search}"/>
-						</div>
+					<input type="text" class="form-control" name="pfSearch" value="${sessionScope.search}" />
+				</div>
 						<button type="submit" class="col-md-1 btn common" id="pfsubmit">
 							<i class="fa fa-search"></i>
 						</button>
@@ -132,55 +132,55 @@
 						data-toggle="collapse" data-parent="#searchPf"
 						href="#searchSorting">
 						<button type="button" class="btn common updown">
-							Á¶°Ç °Ë»ö&nbsp;&nbsp;<i class="fa fa-chevron-down"></i>
+							ì¡°ê±´ ê²€ìƒ‰&nbsp;&nbsp;<i class="fa fa-chevron-down"></i>
 						</button>
 					</div>
 				</div>
-				<!-- Á¶°Ç °Ë»ö box -->
+				<!-- ì¡°ê±´ ê²€ìƒ‰ box -->
 				<div class="searchSorting col-md-12 collapse" id="searchSorting">
-					<form class="" method="post" action="/PortIT/detailSearch?cmd=DETAILSEARCH">
+					<form class="" method="post" name="detailsearch" action="/PortIT/detailSearch?cmd=PFDETAIL">
+						<input type="hidden" name="list_value" />
 						<div class="">
 							<div class="sortKey col-md-1">
-								<b>Á¤·Ä</b>
+								<b>ì •ë ¬</b>
 							</div>
 							<div class="col-md-11">
-								<a href="#">ÃÖ½Å¼ø</a> 
-								<a href="#">ÀÎ±â¼ø</a> 
-								<a href="#">·£´ı</a>
+								<a href="javascript:detailSearch(1)">ìµœì‹ ìˆœ</a> 
+								<a href="javascript:detailSearch(2)">ì¸ê¸°ìˆœ</a> 
 							</div>
 						</div>
 						<br> <br>
 						<div class="sortKey col-md-1">
-							<b>ÅÂ±×</b>
+							<b>íƒœê·¸</b>
 						</div>
 						<div class="col-md-11">
-							<!-- ÀÎ±â ÅÂ±× 6°³ ¶ç¿ì±â -->
-							<input class="btn poptag" type="button" value="JAVA" name="language" onclick="fnAppendItem(JAVA)" /> 
-							<input class="btn poptag" type="button" value="C" name="language" onclick="fnAppendItem(C)" /> 
-							<input class="btn poptag" type="button" value="c++" name="language" onclick="fnAppendItem(C++)" /> 
-							<input class="btn poptag" type="button" value="Eclipse" name="language" onclick="fnAppendItem(ECLIPSE)" /> 
-							<input class="btn poptag" type="button" value="jsp" name="language" onclick="fnAppendItem(JSP)" /> 
-							<input class="btn poptag" type="button" value="servlet" name="language" onclick="fnAppendItem(SERVLET)" /> .....
+							<!-- ì¸ê¸° íƒœê·¸ 6ê°œ ë„ìš°ê¸° -->
+							<input class="btn poptag" type="button" value="JAVA" name="language" onclick="fnAppendItem()" /> 
+							<input class="btn poptag" type="button" value="C" name="language" onclick="fnAppendItem()" /> 
+							<input class="btn poptag" type="button" value="c++" name="language" onclick="fnAppendItem()" /> 
+							<input class="btn poptag" type="button" value="Eclipse" name="language" onclick="fnAppendItem()" /> 
+							<input class="btn poptag" type="button" value="jsp" name="language" onclick="fnAppendItem()" /> 
+							<input class="btn poptag" type="button" value="servlet" name="language" onclick="fnAppendItem()" /> .....
 						</div>
 						<br> <br>
 						<div class="col-md-offset-1 col-md-4">
 							<input type="text" class="form-control taginput" id="language" name="language"
-								placeholder="°Ë»öÇÏ°í ½ÍÀº ÅÂ±×¸¦ ÀÔ·ÂÇÏ¼¼¿ä." onchange="fnAppendItem2()" />
+								placeholder="ê²€ìƒ‰í•˜ê³  ì‹¶ì€ íƒœê·¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”." onchange="fnAppendItem2()" />
 						</div>
 						<br> <br>
 						<hr />
 						<div id="itemList" class="col-md-9"></div>
-						<button type="submit" class="btn common col-md-2">Á¶°Ç °Ë»öÇÏ±â</button>
+						<button type="submit" class="btn common col-md-2">ì¡°ê±´ ê²€ìƒ‰í•˜ê¸°</button>
 					</form>
 				</div>
-				<!-- END - Á¶°Ç °Ë»ö box -->
+				<!-- END - ì¡°ê±´ ê²€ìƒ‰ box -->
 				
 					<div class="pfResult mt mb" id="pfResult">
 						<div class="col-md-12 mb">
 				
 	<c:if test="${port_list.size() != 0 }">
-		<c:forEach begin="0" end="${port_list.size() }" var="i" >	
-						<!-- Æ÷Æ®Æú¸®¿À -->
+		<c:forEach begin="0" end="${port_list.size()}" var="i" >	
+						<!-- í¬íŠ¸í´ë¦¬ì˜¤ -->
 						<div class="col-md-3 mb">
 							<div class="portfolio-simple">
 								<div class="pfImg"></div>
@@ -203,7 +203,7 @@
 					</c:forEach>
 			</c:if>	
 	<c:if test="${port_list.size() == 0 }">
-		°Ë»öµÈ °á°ú°¡ ¾ø½À´Ï´Ù.
+		ê²€ìƒ‰ëœ ê²°ê³¼ê°€ ì—†ìŠµë‹ˆë‹¤.
 	</c:if>	
 
 		
@@ -248,7 +248,6 @@
 							'click',
 							function() {
 								var icon = $(this).find('i');
-
 								if (icon.hasClass("fa-chevron-down")) {
 									icon.addClass("fa-chevron-up").removeClass(
 											"fa-chevron-down");
@@ -266,6 +265,14 @@
 			$("#pfsubmit").trigger("click");
 		});
 		
+	</script>
+	
+	<script>
+		//list_value = 1 ì´ë©´ ìµœì‹ ìˆœ ì •ë ¬ 2ì´ë©´ ì¸ê¸°ìˆœ
+		function detailSearch(list_value){
+			document.detailsearch.list_value.value = list_value;
+			document.detailsearch.submit();
+		}	
 	</script>
 </body>
 </html>

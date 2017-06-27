@@ -18,6 +18,7 @@ public class Member {
 	private String prof_img;
 	private String prof_name;
 	private int prof_follower;
+	private Date prof_regdate;
 	
 	public int getMem_id() {
 		return mem_id;
@@ -80,6 +81,12 @@ public class Member {
 	public Member resetMem_id() {
 		mem_id = (int) (Math.random() * 10000000);
 		return this;
+	}
+	public Date getProf_regdate() {
+		return prof_regdate;
+	}
+	public void setProf_regdate(Date prof_regdate) {
+		this.prof_regdate = prof_regdate;
 	}
 
 }

@@ -54,15 +54,30 @@ public class SearchDao {
 	/**
 	 * 포트폴리오 검색결과  
 	 */
-	public List searchAll_port(String keyword) {
-		String sql = "select distinct MEDIA_LIBRARY.ML_PATH, TAG.TAG_NAME, portfolio.PF_TITLE ,Profile.PROF_NAME, portfolio.PF_LIKE "
-				+ "from MEDIA_LIBRARY, TAG, Profile, portfolio, prof_pf, TAG_USE "
-				+ "where tag.tag_name like '%"+keyword+"%'"
-				+ "and prof_pf.PROF_ID = Profile.PROF_ID  "
-				+ "and prof_pf.PF_ID = portfolio.PF_ID and TAG_USE.TAG_ID = TAG.TAG_ID "
-				+ "and TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID "
-				+ "and MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID";
+	public List searchAll_port(String keyword,boolean lineup) {
 		
+		String sql = "";
+		
+		if(lineup == true){
+			sql = "select distinct Pf_regdate, MEDIA_LIBRARY.ML_PATH, TAG.TAG_NAME, portfolio.PF_TITLE ,Profile.PROF_NAME, portfolio.PF_LIKE "
+					+ "from MEDIA_LIBRARY, TAG, Profile, portfolio, prof_pf, TAG_USE "
+					+ "where tag.tag_name like '%"+keyword+"%'"
+					+ " and prof_pf.PROF_ID = Profile.PROF_ID  "
+					+ "and prof_pf.PF_ID = portfolio.PF_ID and TAG_USE.TAG_ID = TAG.TAG_ID "
+					+ "and TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID "
+					+ "and MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID "
+					+ "order by Pf_regdate desc";
+		}
+		else{
+			sql = "select distinct MEDIA_LIBRARY.ML_PATH, TAG.TAG_NAME, portfolio.PF_TITLE ,Profile.PROF_NAME, portfolio.PF_LIKE "
+					+ "from MEDIA_LIBRARY, TAG, Profile, portfolio, prof_pf, TAG_USE "
+					+ "where tag.tag_name like '%"+keyword+"%'"
+					+ " and prof_pf.PROF_ID = Profile.PROF_ID  "
+					+ "and prof_pf.PF_ID = portfolio.PF_ID and TAG_USE.TAG_ID = TAG.TAG_ID "
+					+ "and TAG_USE.TAG_USE_TYPE_ID= prof_pf.PF_ID "
+					+ "and MEDIA_LIBRARY.ML_TYPE_ID = portfolio.PF_ID "
+					+ "order by portfolio.PF_LIKE desc";
+		}
 		
 		ArrayList list = new ArrayList();
 		try {
@@ -78,13 +93,13 @@ public class SearchDao {
 				portfolio.setPf_title(rs.getString("pf_title"));
 				portfolio.setPf_like(rs.getInt("pf_like"));
 				portfolio.setProf_name(rs.getString("prof_name"));
-
+				
 				list.add(portfolio);
 			}
 		}
 
 		catch (Exception err) {
-			System.out.println("searchAll() 에서 오류");
+			System.out.println("searchAll_port() 에서 오류");
 			err.printStackTrace();
 		}
 
@@ -185,15 +200,28 @@ public class SearchDao {
 	/**
 	 * 멤버 검색 결과
 	 */
-	public List searchAll_member(String keyword) {
+	public List searchAll_member(String keyword,boolean lineup) {
+		
+		String sql ="";
+		if(lineup == true){
+			sql = "select profile.prof_img, profile.prof_name, tag.tag_name, profile.prof_follower, prof_regdate "
+					+ "from profile join tag_use "
+					+ "on tag_use.tag_use_type_id = profile.prof_id "
+					+ "join tag "
+					+ "on tag.tag_id = tag_use.tag_id "
+					+ "where tag.tag_name like '%"+keyword+"%' "
+					+ "order by prof_regdate desc";
+		}	
+		else{
+			sql = "select profile.prof_img, profile.prof_name, tag.tag_name, profile.prof_follower "
+					+ "from profile join tag_use "
+					+ "on tag_use.tag_use_type_id = profile.prof_id "
+					+ "join tag "
+					+ "on tag.tag_id = tag_use.tag_id "
+					+ "where tag.tag_name like '%"+keyword+"%' "
+					+ "order by profile.prof_follower desc";
+		}
 		ArrayList list = new ArrayList();
-		String sql = "select profile.prof_img, profile.prof_name, tag.tag_name, profile.prof_follower "
-				+ "from profile join tag_use "
-				+ "on tag_use.tag_use_type_id = profile.prof_id "
-				+ "join tag "
-				+ "on tag.tag_id = tag_use.tag_id "
-				+ "where tag.tag_name like '%"+keyword+"%'";
-				
 		
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -223,15 +251,27 @@ public class SearchDao {
 	/**
 	 * 프로젝트 검색 결과
 	 */
-	public List searchAll_proj(String keyword) {
-		ArrayList list = new ArrayList();
-		String sql = "select * "
+	public List searchAll_proj(String keyword,boolean lineup) {
+		String sql = "";
+		if(lineup == true){
+			sql = "select * "
 				+ "from tag join tag_use "
 				+ "on tag.tag_id = tag_use.tag_id "
 				+ "join project "
 				+ "on tag_use.tag_use_type_id = project.proj_id "
-				+ "where tag.tag_name like '%"+keyword+"%'";
-						
+				+ "where tag.tag_name like '%"+keyword+"%' "
+				+ "order by proj_regdate desc";
+		}
+		else{
+			sql = "select * "
+					+ "from tag join tag_use "
+					+ "on tag.tag_id = tag_use.tag_id "
+					+ "join project "
+					+ "on tag_use.tag_use_type_id = project.proj_id "
+					+ "where tag.tag_name like '%"+keyword+"%' "
+					+ "order by (proj_regenddate - sysdate) desc";
+		}
+		ArrayList list = new ArrayList();
 				
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -243,8 +283,8 @@ public class SearchDao {
 				project.setProj_title(rs.getString("proj_title"));
 				project.setProj_intro(rs.getString("proj_intro"));
 				project.setProj_to(rs.getInt("proj_to"));
-				
-				//project.setProj_regenddate(rs.getDate("proj_regenddate")); date형식 받는데 오류
+				project.setProj_regdate(rs.getDate("proj_regdate"));
+				project.setProj_regenddate(rs.getDate("proj_regenddate")); 
 				
 				list.add(project);
 			}

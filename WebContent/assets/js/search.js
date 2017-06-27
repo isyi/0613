@@ -1,5 +1,5 @@
 var count = 0;
-function fnAppendItem(language){
+function fnAppendItem(){
 	count++;
 	
 	var newSpan = document.createElement("span"); 

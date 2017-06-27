@@ -165,7 +165,7 @@
 								</c:if>
 								<div class="text-right">
 									<button type="button" class="btn moreBtn"
-										onclick="location.href='pfList.jsp'">더 보기</button>						
+										onclick="location.href='pfSearch.jsp'">더 보기</button>						
 								</div>
 							</div>
 						</div>

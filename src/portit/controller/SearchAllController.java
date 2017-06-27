@@ -22,7 +22,7 @@ import portit.model.dto.Portfolio;
  *
  */
 @WebServlet(urlPatterns="/search")
-public class SearchController extends HttpServlet{
+public class SearchAllController extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -43,11 +43,13 @@ public class SearchController extends HttpServlet{
 		search = search.toUpperCase();
 		session.setAttribute("search", search);
 		
+		boolean lineup = true;
+		
 		//dao 호출
 		SearchDao searchDao = new SearchDao();		
-		List port_list = searchDao.searchAll_port(search);
-		List mem_list = searchDao.searchAll_member(search);
-		List proj_list = searchDao.searchAll_proj(search);
+		List port_list = searchDao.searchAll_port(search,lineup);
+		List mem_list = searchDao.searchAll_member(search,lineup);
+		List proj_list = searchDao.searchAll_proj(search,lineup);
 	
 		//Model에서 가지고 온 정보를 View에 넘겨주기 위해 변수 선언
 		req.setAttribute("port_list", port_list);
