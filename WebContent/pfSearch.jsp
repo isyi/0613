@@ -61,7 +61,7 @@
 				<ul class="nav pull-right top-menu">
 					<li>
 						<form class="form-inline top-menu-search" method="post"
-							action="/PortIT/search?cmd=SEARCH">
+							action="/PortIt/search?cmd=SEARCH">
 							<div class="input-group">
 								<input type="text" class="form-control round-form" name="search"
 									size="20" placeholder="통합 검색" /> <span class="input-group-btn">
@@ -95,7 +95,7 @@
 						<ul class="dropdown-menu extended inbox">
 							<div class="notify-arrow notify-arrow-yellow"></div>
 							<li>
-								<p class="yellow">김수연 님</p>
+								<p class="yellow"> 님</p>
 							</li>
 							<li><a href="">내 프로필</a></li>
 							<li><a href="">팔로잉한 멤버</a> <a href="">북마크한 포트폴리오</a></li>
@@ -120,7 +120,7 @@
 
 				<div class="col-md-12 mt mb">
 					<form class="col-md-10 searchKeyword" method="post"
-						action="/PortIT/SearchView?cmd=PFSEARCH">
+						action="/PortIt/SearchView?cmd=PFSEARCH">
 						<div class="form-group col-md-11">
 					<input type="text" class="form-control" name="pfSearch" value="${sessionScope.search}" />
 				</div>
@@ -138,7 +138,7 @@
 				</div>
 				<!-- 조건 검색 box -->
 				<div class="searchSorting col-md-12 collapse" id="searchSorting">
-					<form class="" method="post" name="detailsearch" action="/PortIT/detailSearch?cmd=PFDETAIL">
+					<form class="" method="post" name="detailsearch" action="/PortIt/detailSearch?cmd=PFDETAIL">
 						<input type="hidden" name="list_value" />
 						<div class="">
 							<div class="sortKey col-md-1">
@@ -178,8 +178,8 @@
 					<div class="pfResult mt mb" id="pfResult">
 						<div class="col-md-12 mb">
 				
-	<c:if test="${port_list.size() != 0 }">
-		<c:forEach begin="0" end="${port_list.size()}" var="i" >	
+	<c:if test="${port_list.size() != 0 && port_list.size()>0 }">
+		<c:forEach begin="0" end="${port_list.size()-1}" var="i" >	
 						<!-- 포트폴리오 -->
 						<div class="col-md-3 mb">
 							<div class="portfolio-simple">
@@ -261,11 +261,16 @@
 	
 	<script>
 		$(document).ready(function(){
-			event.stopPropagation();
-			$("#pfsubmit").trigger("click");
-		});
-		
+			//$("#pfsubmit").trigger("click");
+			//event.stopPropagation();
+		});		
 	</script>
+	<script>
+		$(document).ready(function(){
+			event.stopPropagation();
+		});		
+	</script>
+	
 	
 	<script>
 		//list_value = 1 이면 최신순 정렬 2이면 인기순

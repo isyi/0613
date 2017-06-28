@@ -53,9 +53,9 @@
 				<!--  menu start -->
 				<ul class="nav top-menu">
 					<!-- settings start -->
-					<li><a href="">Member</a></li>
-					<li><a href="">Portfolio</a></li>
-					<li><a href="">Project</a>
+					<li><a href="/PortIt/memList.jsp">Member</a></li>
+					<li><a href="/PortIt/pfList.jsp">Portfolio</a></li>
+					<li><a href="/PortIt/projList.jsp">Project</a>
 					<li>
 					<li><a href="">Community</a></li>
 				</ul>
@@ -66,7 +66,7 @@
 				<ul class="nav pull-right top-menu">
 					<li>
 						<form class="form-inline top-menu-search" method="post"
-							action="/PortIT/search?cmd=SEARCH">
+							action="/PortIt/search?cmd=SEARCH">
 							<div class="input-group">
 								<input type="text" class="form-control round-form" name="search"
 									size="20" placeholder="통합 검색" /> <span class="input-group-btn">
@@ -165,7 +165,7 @@
 								</c:if>
 								<div class="text-right">
 									<button type="button" class="btn moreBtn"
-										onclick="location.href='pfSearch.jsp'">더 보기</button>						
+										onclick="location.href='pfList.jsp'">더 보기</button>						
 								</div>
 							</div>
 						</div>
@@ -204,7 +204,7 @@
 								</c:if>
 								<div class="text-right">
 									<button type="button" class="btn moreBtn"
-										onclick="location.href='memSearch.jsp'">더 보기</button>
+										onclick="location.href='memList.jsp'">더 보기</button>
 								</div>
 							</div>
 						</div>
@@ -244,7 +244,7 @@
 										</c:if>
 										<div class="text-right">
 											<button type="button" class="btn moreBtn"
-												onclick="location.href='projSearch.jsp'">더 보기</button>
+												onclick="location.href='projList.jsp'">더 보기</button>
 										</div>
 
 									</div>

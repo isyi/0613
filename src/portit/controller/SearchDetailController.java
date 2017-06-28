@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import portit.model.dao.Portfolio_ViewDao;
 import portit.model.dao.SearchDao;
 import portit.model.dto.Portfolio;
 
